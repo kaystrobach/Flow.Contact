@@ -3,11 +3,11 @@
 namespace KayStrobach\Contact\Controller;
 
 use KayStrobach\Contact\Domain\Repository\UserRepository;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use KayStrobach\Contact\Domain\Model\Institution;
 use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 
-class InstitutionController extends \TYPO3\Flow\Mvc\Controller\ActionController
+class InstitutionController extends \Neos\Flow\Mvc\Controller\ActionController
 {
     /**
      * @Flow\Inject()

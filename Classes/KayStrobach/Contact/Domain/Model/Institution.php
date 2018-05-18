@@ -4,7 +4,7 @@ namespace KayStrobach\Contact\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use KayStrobach\Contact\Domain\Traits\ContactTrait;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 

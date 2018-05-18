@@ -5,14 +5,14 @@ namespace KayStrobach\Contact\Command;
 use KayStrobach\Contact\Domain\Model\Contact;
 use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Security\Account;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Security\Account;
 use TYPO3\Party\Domain\Model\PersonName;
 
 /**
  * @Flow\Scope("singleton")
  */
-class UserCommandController extends \TYPO3\Flow\Cli\CommandController
+class UserCommandController extends \Neos\Flow\Cli\CommandController
 {
     /**
      * @Flow\Inject()
@@ -22,31 +22,31 @@ class UserCommandController extends \TYPO3\Flow\Cli\CommandController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\Policy\PolicyService
+     * @var \Neos\Flow\Security\Policy\PolicyService
      */
     protected $policyService;
 
     /**
-     * @var \TYPO3\Flow\Security\Cryptography\HashService
+     * @var \Neos\Flow\Security\Cryptography\HashService
      * @Flow\Inject
      */
     protected $hashService;
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\AccountRepository
+     * @var \Neos\Flow\Security\AccountRepository
      */
     protected $accountRepository;
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\AccountFactory
+     * @var \Neos\Flow\Security\AccountFactory
      */
     protected $accountFactory;
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Persistence\PersistenceManagerInterface
+     * @var \Neos\Flow\Persistence\PersistenceManagerInterface
      */
     protected $persistenceManager;
 

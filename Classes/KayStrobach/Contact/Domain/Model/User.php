@@ -2,7 +2,7 @@
 
 namespace KayStrobach\Contact\Domain\Model;
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 use TYPO3\Party\Domain\Model\AbstractParty;
@@ -62,7 +62,7 @@ class User extends AbstractParty
     /**
      * Sets the accounts of this party
      *
-     * @param \Doctrine\Common\Collections\Collection $accounts All assigned TYPO3\Flow\Security\Account objects
+     * @param \Doctrine\Common\Collections\Collection $accounts All assigned Neos\Flow\Security\Account objects
      * @return void
      */
     public function setAccounts($accounts)

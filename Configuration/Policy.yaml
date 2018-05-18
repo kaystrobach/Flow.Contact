@@ -1,5 +1,5 @@
 privilegeTargets:
-  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+  Neos\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
     KayStrobach_Contact_AllControllers:
       matcher: 'method(KayStrobach\Contact\Controller\.*Controller->.*())'
     KayStrobach_Contact_InstitutionController:
@@ -26,7 +26,7 @@ roles:
       -
         privilegeTarget: KayStrobach_Contact_UserController
         permission: GRANT
-  'TYPO3.Flow:AuthenticatedUser':
+  'Neos.Flow:AuthenticatedUser':
     privileges:
       -
         privilegeTarget: KayStrobach_Contact_ProfileController

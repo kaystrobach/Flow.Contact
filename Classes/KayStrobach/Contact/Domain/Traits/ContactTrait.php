@@ -5,7 +5,7 @@ namespace KayStrobach\Contact\Domain\Traits;
  * This file is part of the KayStrobach.Contact package.
  */
 
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 

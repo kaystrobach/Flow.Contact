@@ -5,17 +5,17 @@ namespace KayStrobach\Contact\Controller;
 use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
-use TYPO3\Flow\Annotations as Flow;
+use Neos\Flow\Annotations as Flow;
 use KayStrobach\Contact\Domain\Model\Institution;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Flow\Mvc\Exception\StopActionException;
-use TYPO3\Flow\Security\Account;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Cryptography\HashService;
-use TYPO3\Flow\Utility\Algorithms;
+use Neos\Flow\Error\Message;
+use Neos\Flow\Mvc\Exception\StopActionException;
+use Neos\Flow\Security\Account;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Cryptography\HashService;
+use Neos\Flow\Utility\Algorithms;
 use TYPO3\Party\Domain\Service\PartyService;
 
-class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
+class UserController extends \Neos\Flow\Mvc\Controller\ActionController
 {
     /**
      * @Flow\Inject()
@@ -30,7 +30,7 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
     protected $institutionRepository;
 
     /**
-     * @var \TYPO3\Flow\Security\Policy\PolicyService
+     * @var \Neos\Flow\Security\Policy\PolicyService
      * @Flow\Inject
      */
     protected $policyService;
@@ -43,7 +43,7 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
 
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\AccountFactory
+     * @var \Neos\Flow\Security\AccountFactory
      */
     protected $accountFactory;
 

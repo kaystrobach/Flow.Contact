@@ -6,11 +6,11 @@ namespace KayStrobach\Contact\Controller;
  *                                                                        *
  *                                                                        */
 
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Error\Message;
-use TYPO3\Flow\Mvc\Exception\StopActionException;
-use TYPO3\Flow\Security\AccountRepository;
-use TYPO3\Flow\Security\Cryptography\HashService;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Error\Message;
+use Neos\Flow\Mvc\Exception\StopActionException;
+use Neos\Flow\Security\AccountRepository;
+use Neos\Flow\Security\Cryptography\HashService;
 use TYPO3\Party\Domain\Service\PartyService;
 
 /**
@@ -18,10 +18,10 @@ use TYPO3\Party\Domain\Service\PartyService;
  *
  * @Flow\Scope("singleton")
  */
-class ProfileController extends \TYPO3\Flow\Mvc\Controller\ActionController {
+class ProfileController extends \Neos\Flow\Mvc\Controller\ActionController {
     /**
      * @Flow\Inject
-     * @var \TYPO3\Flow\Security\Authentication\AuthenticationManagerInterface
+     * @var \Neos\Flow\Security\Authentication\AuthenticationManagerInterface
      */
     protected $authenticationManager;
 
@@ -32,7 +32,7 @@ class ProfileController extends \TYPO3\Flow\Mvc\Controller\ActionController {
     protected $partyService;
 
     /**
-     * @var \TYPO3\Flow\Security\Account
+     * @var \Neos\Flow\Security\Account
      */
     protected $account;
 

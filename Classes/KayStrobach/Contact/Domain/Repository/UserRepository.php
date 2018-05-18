@@ -6,8 +6,8 @@ namespace KayStrobach\Contact\Domain\Repository;
  */
 
 use KayStrobach\Contact\Domain\Model\Institution;
-use TYPO3\Flow\Annotations as Flow;
-use TYPO3\Flow\Persistence\Repository;
+use Neos\Flow\Annotations as Flow;
+use Neos\Flow\Persistence\Repository;
 
 /**
  * @Flow\Scope("singleton")
@@ -17,7 +17,7 @@ class UserRepository extends Repository
 
     /**
      * @param Institution $institution
-     * @return \TYPO3\Flow\Persistence\QueryResultInterface
+     * @return \Neos\Flow\Persistence\QueryResultInterface
      */
     public function findByInstitution(Institution $institution)
     {
