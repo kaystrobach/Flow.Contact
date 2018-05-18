@@ -13,6 +13,9 @@
     "extra": {
         "neos": {
             "package-key": "KayStrobach.Contact"
-        }
+        },
+        "applied-flow-migrations": [
+            "TYPO3.FLOW3-201201261636"
+        ]
     }
 }
