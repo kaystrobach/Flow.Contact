@@ -15,7 +15,6 @@ class User extends AbstractParty
     /**
      * @var \KayStrobach\Contact\Domain\Model\Contact
      * @ORM\OneToOne(cascade={"all"})
-     * @Gedmo\Versioned
      */
     protected $contact;
 

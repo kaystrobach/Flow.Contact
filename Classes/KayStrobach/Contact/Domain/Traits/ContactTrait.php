@@ -22,14 +22,12 @@ trait ContactTrait
      * @var string
      * @Flow\Validate(type="String")
      * @Flow\Validate(type="StringLength", options={ "minimum"=5, "maximum"=255 })
-     * @Gedmo\Versioned
      */
     protected $phone = '';
 
     /**
      * @var string
      * @Flow\Validate(type="String")
-     * @Gedmo\Versioned
      */
     protected $mobile = '';
 

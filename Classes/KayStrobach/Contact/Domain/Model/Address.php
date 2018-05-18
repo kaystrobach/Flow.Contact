@@ -15,7 +15,6 @@ class Address
      * @var string
      * @Flow\Validate(type="String")
      * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255},validationGroups={"KontaktAnschrift"})
-     * @Gedmo\Versioned
      */
     protected $street = '';
 
@@ -23,21 +22,18 @@ class Address
      * @var string
      * @Flow\Validate(type="String")
      * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255},validationGroups={"KontaktAnschrift"})
-     * @Gedmo\Versioned
      */
     protected $houseNumber = '';
 
     /**
      * @var string
      * @Flow\Validate(type="StringLength", options={ "minimum"=0, "maximum"=255})
-     * @Gedmo\Versioned
      */
     protected $addressAddon = '';
 
     /**
      * @var string
      * @Flow\Validate(type="String")
-     * @Gedmo\Versioned
      */
     protected $roomNumber = '';
 
@@ -45,13 +41,11 @@ class Address
      * @var string
      * @Flow\Validate(type="Number")
      * @Flow\Validate(type="StringLength", options={ "minimum"=5, "maximum"=5},validationGroups={"KontaktAnschrift"})
-     * @Gedmo\Versioned
      */
     protected $zipCode = '';
 
     /**
      * @var string
-     * @Gedmo\Versioned
      */
     protected $city = '';
 

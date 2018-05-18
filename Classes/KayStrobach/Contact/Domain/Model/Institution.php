@@ -19,7 +19,6 @@ class Institution
      * @var string
      * @Flow\Validate(type="String")
      * @Flow\Validate(type="NotEmpty")
-     * @Gedmo\Versioned
      */
     protected $name;
 

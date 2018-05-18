@@ -24,7 +24,6 @@ class Contact
     /**
      * @var string
      * @Flow\Validate(type="String")
-     * @Gedmo\Versioned
      */
     protected $position = '';
 
