@@ -22,7 +22,7 @@ class MailUtility
      * The current view, as resolved by resolveView()
      *
      * @Flow\Inject
-     * @var \TYPO3\Fluid\View\StandaloneView
+     * @var \Neos\FluidAdaptor\View\StandaloneView
      * @api
      */
     protected $view = null;
