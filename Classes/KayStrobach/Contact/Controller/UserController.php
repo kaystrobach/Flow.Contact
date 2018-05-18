@@ -7,7 +7,7 @@ use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
 use Neos\Flow\Annotations as Flow;
 use KayStrobach\Contact\Domain\Model\Institution;
-use Neos\Flow\Error\Message;
+use Neos\Error\Messages\Message;
 use Neos\Flow\Mvc\Exception\StopActionException;
 use Neos\Flow\Security\Account;
 use Neos\Flow\Security\AccountRepository;

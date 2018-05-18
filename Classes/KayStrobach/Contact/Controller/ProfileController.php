@@ -7,7 +7,7 @@ namespace KayStrobach\Contact\Controller;
  *                                                                        */
 
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Error\Message;
+use Neos\Error\Messages\Message;
 use Neos\Flow\Mvc\Exception\StopActionException;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Cryptography\HashService;
