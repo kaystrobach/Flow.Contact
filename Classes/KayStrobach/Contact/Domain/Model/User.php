@@ -9,7 +9,6 @@ use Neos\Party\Domain\Model\AbstractParty;
 
 /**
  * @Flow\Entity
- * @Gedmo\Loggable(logEntryClass="KayStrobach\Logger\Domain\Model\LogEntry")
  */
 class User extends AbstractParty
 {

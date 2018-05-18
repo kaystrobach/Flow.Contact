@@ -8,7 +8,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 use Neos\Party\Domain\Model\PersonName;
 
 /**
- * @Gedmo\Loggable(logEntryClass="KayStrobach\Logger\Domain\Model\LogEntry")
  * @Flow\Entity
  */
 class Contact
