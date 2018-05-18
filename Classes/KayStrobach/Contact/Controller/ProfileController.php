@@ -11,7 +11,7 @@ use Neos\Error\Messages\Message;
 use Neos\Flow\Mvc\Exception\StopActionException;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Cryptography\HashService;
-use TYPO3\Party\Domain\Service\PartyService;
+use Neos\Party\Domain\Service\PartyService;
 
 /**
  * Standard controller for the SingleSignOn package

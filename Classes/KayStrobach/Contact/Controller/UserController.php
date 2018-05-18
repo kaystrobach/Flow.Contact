@@ -13,7 +13,7 @@ use Neos\Flow\Security\Account;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Cryptography\HashService;
 use Neos\Flow\Utility\Algorithms;
-use TYPO3\Party\Domain\Service\PartyService;
+use Neos\Party\Domain\Service\PartyService;
 
 class UserController extends \Neos\Flow\Mvc\Controller\ActionController
 {

@@ -5,7 +5,7 @@ use KayStrobach\Contact\Domain\Traits\ContactTrait;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
-use TYPO3\Party\Domain\Model\PersonName;
+use Neos\Party\Domain\Model\PersonName;
 
 /**
  * @Gedmo\Loggable(logEntryClass="KayStrobach\Logger\Domain\Model\LogEntry")

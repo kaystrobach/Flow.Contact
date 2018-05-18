@@ -7,7 +7,7 @@ use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
 use Neos\Flow\Annotations as Flow;
 use Neos\Flow\Security\Account;
-use TYPO3\Party\Domain\Model\PersonName;
+use Neos\Party\Domain\Model\PersonName;
 
 /**
  * @Flow\Scope("singleton")
