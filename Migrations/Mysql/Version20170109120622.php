@@ -31,12 +31,16 @@ class Version20170109120622 extends AbstractMigration
         $this->addSql('CREATE TABLE kaystrobach_contact_domain_model_contact (persistence_object_identifier VARCHAR(40) NOT NULL, name VARCHAR(40) DEFAULT NULL, address VARCHAR(40) DEFAULT NULL, position VARCHAR(255) NOT NULL, email VARCHAR(255) NOT NULL, phone VARCHAR(255) NOT NULL, mobile VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_62ADCBD85E237E06 (name), UNIQUE INDEX UNIQ_62ADCBD8D4E6F81 (address), PRIMARY KEY(persistence_object_identifier)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE kaystrobach_contact_domain_model_institution (persistence_object_identifier VARCHAR(40) NOT NULL, address VARCHAR(40) DEFAULT NULL, name VARCHAR(255) NOT NULL, UNIQUE INDEX UNIQ_4CC1CA20D4E6F81 (address), PRIMARY KEY(persistence_object_identifier)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
         $this->addSql('CREATE TABLE kaystrobach_contact_domain_model_user (persistence_object_identifier VARCHAR(40) NOT NULL, contact VARCHAR(40) DEFAULT NULL, institution VARCHAR(40) DEFAULT NULL, UNIQUE INDEX UNIQ_A32C8B074C62E638 (contact), INDEX IDX_A32C8B073A9F98E5 (institution), PRIMARY KEY(persistence_object_identifier)) DEFAULT CHARACTER SET utf8 COLLATE utf8_unicode_ci ENGINE = InnoDB');
-        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_contact ADD CONSTRAINT FK_62ADCBD85E237E06 FOREIGN KEY (name) REFERENCES typo3_party_domain_model_personname (persistence_object_identifier)');
+        if ($schema->hasTable('typo3_party_domain_model_personname')) {
+            $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_contact ADD CONSTRAINT FK_62ADCBD85E237E06 FOREIGN KEY (name) REFERENCES typo3_party_domain_model_personname (persistence_object_identifier)');
+        }
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_contact ADD CONSTRAINT FK_62ADCBD8D4E6F81 FOREIGN KEY (address) REFERENCES kaystrobach_contact_domain_model_address (persistence_object_identifier)');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_institution ADD CONSTRAINT FK_4CC1CA20D4E6F81 FOREIGN KEY (address) REFERENCES kaystrobach_contact_domain_model_address (persistence_object_identifier)');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD CONSTRAINT FK_A32C8B074C62E638 FOREIGN KEY (contact) REFERENCES kaystrobach_contact_domain_model_contact (persistence_object_identifier)');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD CONSTRAINT FK_A32C8B073A9F98E5 FOREIGN KEY (institution) REFERENCES kaystrobach_contact_domain_model_institution (persistence_object_identifier)');
-        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD CONSTRAINT FK_A32C8B0747A46B0A FOREIGN KEY (persistence_object_identifier) REFERENCES typo3_party_domain_model_abstractparty (persistence_object_identifier) ON DELETE CASCADE');
+        if ($schema->hasTable('typo3_party_domain_model_abstractparty')) {
+            $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD CONSTRAINT FK_A32C8B0747A46B0A FOREIGN KEY (persistence_object_identifier) REFERENCES typo3_party_domain_model_abstractparty (persistence_object_identifier) ON DELETE CASCADE');
+        }
     }
 
     /**
