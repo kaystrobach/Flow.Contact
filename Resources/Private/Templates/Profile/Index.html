@@ -1,0 +1,35 @@
+{namespace sbsapi=SBS\ApiClient\ViewHelpers}
+{namespace identicon=Ttree\Identicons\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Title">Profile</f:section>
+
+<f:section name="Content">
+    <fieldset class="form-horizontal">
+        <legend>
+            Ihre Daten
+        </legend>
+
+        <f:render partial="TableRow" arguments="{property:'Vor- und Nachname', value:'{person.contact.name.fullname}'}" />
+        <f:render partial="TableRow" arguments="{property:'Benutzername', value:account.accountIdentifier}" />
+        <f:render partial="TableRow" arguments="{property:'E-Mail-Adresse', value:person.contact.email}" />
+
+        <div class="form-group">
+            <label class="col-xs-4 control-label">Berechtigungen</label>
+            <div class="col-xs-4">
+                <p class="form-control-static">
+                    <ul class="list-unstyled">
+                        <f:for each="{account.roles}" as="role">
+                            <li>{role.name}</li>
+                        </f:for>
+                    </ul>
+                </p>
+            </div>
+        </div>
+
+    </fieldset>
+    <f:form action="changePassword" class="form-horizontal" additionalAttributes="{role:'form'}">
+        <f:render partial="User/PasswordChange" />
+    </f:form>
+</f:section>

@@ -1,0 +1,57 @@
+{namespace search=KayStrobach\VisualSearch\ViewHelpers}
+
+<f:layout name="Default" />
+
+<f:section name="Title">Institutionen</f:section>
+
+<f:section name="NavigationBar">
+    <ul class="nav navbar-nav">
+        <li>
+            <f:link.action action="new">
+                <span class="glyphicon glyphicon-plus-sign"></span>
+                Institution anlegen
+            </f:link.action>
+        </li>
+    </ul>
+</f:section>
+
+<f:section name="Content">
+    <f:if condition="{institutions}">
+        <f:then>
+            <div class="table-responsive" id="search-result-area">
+                    <f:widget.paginate objects="{institutions}" as="paginatedInstitutions"
+                                       configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
+
+                        <small class="pull-right">{institutions -> f:count()} Einträge</small>
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>
+                                        Name
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <f:for each="{paginatedInstitutions}" as="institution">
+                                    <tr>
+                                        <td>
+                                            <f:link.action action="edit" arguments="{institution:institution}">
+                                                {institution.name}
+                                            </f:link.action>
+                                        </td>
+                                    </tr>
+                                </f:for>
+                            </tbody>
+                        </table>
+                    </f:widget.paginate>
+            </div>
+        </f:then>
+        <f:else>
+            <div class="alert alert-info">
+                Es gibt leider noch keine Institutionen.
+            </div>
+        </f:else>
+    </f:if>
+
+
+</f:section>

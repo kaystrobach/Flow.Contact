@@ -1,0 +1,33 @@
+privilegeTargets:
+  TYPO3\Flow\Security\Authorization\Privilege\Method\MethodPrivilege:
+    KayStrobach_Contact_AllControllers:
+      matcher: 'method(KayStrobach\Contact\Controller\.*Controller->.*())'
+    KayStrobach_Contact_InstitutionController:
+      matcher: 'method(KayStrobach\Contact\Controller\InstitutionController->.*())'
+    KayStrobach_Contact_UserController:
+      matcher: 'method(KayStrobach\Contact\Controller\UserController->.*())'
+    KayStrobach_Contact_ProfileController:
+      matcher: 'method(KayStrobach\Contact\Controller\ProfileController->.*())'
+
+
+roles:
+  'KayStrobach.Contact:Administrator':
+    parentRoles:
+        - 'KayStrobach.Contact:UserManager'
+    privileges:
+      -
+        privilegeTarget: KayStrobach_Contact_AllControllers
+        permission: GRANT
+  'KayStrobach.Contact:UserManager':
+    privileges:
+      -
+        privilegeTarget: KayStrobach_Contact_InstitutionController
+        permission: GRANT
+      -
+        privilegeTarget: KayStrobach_Contact_UserController
+        permission: GRANT
+  'TYPO3.Flow:AuthenticatedUser':
+    privileges:
+      -
+        privilegeTarget: KayStrobach_Contact_ProfileController
+        permission: GRANT

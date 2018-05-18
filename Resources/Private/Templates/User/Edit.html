@@ -1,0 +1,16 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Benutzer bearbeiten</f:section>
+
+
+<f:section name="Content">
+    <f:form action="update" object="{user}" objectName="user" class="form-horizontal">
+        <f:render partial="User/Fields" arguments="{_all}" />
+        <f:form.button type="submit" class="btn btn-success pull-right">
+            Speichern
+        </f:form.button>
+    </f:form>
+    <f:for each="{user.accounts}" as="account">
+        <f:render partial="User/Password" arguments="{account:account}" />
+    </f:for>
+</f:section>

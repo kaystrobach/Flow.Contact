@@ -1,0 +1,37 @@
+<f:if condition="{users -> f:count()}">
+    <f:then>
+        <div class="panel panel-default">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>
+                        Name
+                    </th>
+                    <th>
+                        E-Mail
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+                <f:for each="{users}" as="user">
+                    <tr>
+                        <td>
+                            <f:link.action action="edit" controller="user" arguments="{user:user}">
+                                {user.contact.name}
+                            </f:link.action>
+                        </td>
+                        <td>
+                            {user.contact.email}
+                        </td>
+                    </tr>
+                </f:for>
+                </tbody>
+            </table>
+        </div>
+    </f:then>
+    <f:else>
+        <div class="alert alert-info">
+            Keine Nutzer
+        </div>
+    </f:else>
+</f:if>

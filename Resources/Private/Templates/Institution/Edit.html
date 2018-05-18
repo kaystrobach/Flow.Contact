@@ -1,0 +1,20 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Institution bearbeiten</f:section>
+
+
+<f:section name="Content">
+    <f:form action="update" object="{institution}" objectName="institution" class="form-horizontal">
+        <div class="row">
+            <div class="col-sm-6">
+                <f:render partial="Contact/Fields" arguments="{_all}" />
+            </div>
+            <div class="col-sm-6">
+                <f:render partial="User/List" arguments="{users:users}" />
+            </div>
+        </div>
+        <f:form.button type="submit" class="btn btn-success pull-right">
+            Speichern
+        </f:form.button>
+    </f:form>
+</f:section>

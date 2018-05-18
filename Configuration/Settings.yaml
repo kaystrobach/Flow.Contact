@@ -1,0 +1,5 @@
+KayStrobach:
+  Contact:
+    MailUtility:
+      from:     noreply@example.org
+      reply-to: noreply@example.org

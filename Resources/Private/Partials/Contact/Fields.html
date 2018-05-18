@@ -1,0 +1,30 @@
+
+<div class="panel panel-default">
+    <div class="panel-body">
+        <div class="form-group">
+            <label class="col-xs-12">Name</label>
+            <div class="col-xs-12">
+                <f:form.textfield property="name" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12">E-Mail</label>
+            <div class="col-xs-12">
+                <f:form.textfield property="email" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12">Telefon</label>
+            <div class="col-xs-12">
+                <f:form.textfield property="phone" class="form-control"/>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-xs-12">Handy</label>
+            <div class="col-xs-12">
+                <f:form.textfield property="mobile" class="form-control"/>
+            </div>
+        </div>
+        <f:render partial="Address/Fields" arguments="{prefix:'address.'}" />
+    </div>
+</div>

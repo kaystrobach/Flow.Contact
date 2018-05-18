@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Benutzer anlegen</f:section>
+
+
+<f:section name="Content">
+    <f:form action="create" object="{user}" objectName="user" class="form-horizontal">
+        <f:render partial="User/Fields" arguments="{_all}" />
+        <f:form.button type="submit" class="btn btn-success pull-right">
+            Anlegen
+        </f:form.button>
+    </f:form>
+</f:section>

@@ -1,0 +1,101 @@
+{namespace custom=KayStrobach\Custom\ViewHelpers}
+<div class="row">
+    <div class="col-sm-6">
+        <div class="panel panel-default">
+            <div class="panel-body">
+                <f:render partial="Name/Fields" arguments="{prefix:'contact.name.'}" />
+                <div class="form-group">
+                    <label class="col-xs-12">Institution</label>
+                    <div class="col-xs-12">
+                        <custom:form.select property="institution" options="{institutions}" optionLabelField="name" nothingSelectedLabel="Bitte wählen" id="kontakt.anrede" class="form-control" />
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">Position</label>
+                    <div class="col-xs-12">
+                        <f:form.textfield property="contact.position" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">E-Mail</label>
+                    <div class="col-xs-12">
+                        <f:form.textfield property="contact.email" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">Telefon</label>
+                    <div class="col-xs-12">
+                        <f:form.textfield property="contact.phone" class="form-control"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-xs-12">Handy</label>
+                    <div class="col-xs-12">
+                        <f:form.textfield property="contact.mobile" class="form-control"/>
+                    </div>
+                </div>
+                <f:render partial="Address/Fields" arguments="{prefix:'contact.address.'}" />
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-6">
+        <f:if condition="{user.accounts -> f:count()}">
+            <f:then>
+                <f:for each="{user.accounts}" as="account" key="key">
+                    <div class="panel panel-default">
+                        <div class="panel-body">
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="accounts.{key}.accountIdentifier">Nutzername</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-user"></span>
+                                        </span>
+                                        <f:form.textfield property="accounts.{key}.accountIdentifier" class="form-control" id="accounts.{key}.accountIdentifier"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="accounts.{key}.roles">Rollen</label>
+                                    <f:form.select property="accounts.{key}.roles" options="{roles}"  id="accounts.{key}.roles" optionLabelField="name" class="form-control" multiple="multiple" size="{roles -> f:count()}"/>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="accounts.{key}.creationdate">Anlegedatum</label>
+                                    <div class="input-group">
+                                        <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar"></span>
+                                        </span>
+                                        <input type="text" disabled class="form-control" value="{account.creationdate -> f:format.date(format:'d.m.Y H:i:s')}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="col-sm-12">
+                                    <label for="accounts.{key}.expirationdate">Ablaufdatum</label>
+                                    
+                                    <div class="input-group">
+                                            <span class="input-group-addon">
+                                                <span class="glyphicon glyphicon-calendar"></span>
+                                            </span>
+                                        <custom:form.dateTimeTextfield id="accounts.{key}.expirationDate" property="accounts.{key}.expirationDate" dateFormat="d.m.Y H:i:s" type="text" class="form-control" />
+                                    </div>
+                                </div>
+                            </div>
+
+                            <f:form.button class="btn btn-default" type="button" data="{toggle:'modal', target:'#password-{account -> f:format.identifier()}'}">
+                                Ändere Passwort
+                            </f:form.button>
+                        </div>
+                    </div>
+                </f:for>
+            </f:then>
+        </f:if>
+    </div>
+</div>
+
+

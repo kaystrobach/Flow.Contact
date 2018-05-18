@@ -1,0 +1,13 @@
+<f:layout name="Default" />
+
+<f:section name="Title">Institution anlegen</f:section>
+
+
+<f:section name="Content">
+    <f:form action="create" object="{institution}" objectName="institution" class="form-horizontal">
+        <f:render partial="Contact/Fields" arguments="{_all}" />
+        <f:form.button type="submit" class="btn btn-success pull-right">
+            Anlegen
+        </f:form.button>
+    </f:form>
+</f:section>
