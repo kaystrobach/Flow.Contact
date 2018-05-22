@@ -7,7 +7,6 @@ namespace KayStrobach\Contact\Domain\Traits;
 
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 
 trait ContactTrait
 {
