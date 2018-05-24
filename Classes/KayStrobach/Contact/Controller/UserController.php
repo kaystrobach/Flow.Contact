@@ -6,9 +6,9 @@ use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
 use TYPO3\Flow\Annotations as Flow;
-use KayStrobach\Contact\Domain\Model\Institution;
 use TYPO3\Flow\Error\Message;
 use TYPO3\Flow\Mvc\Exception\StopActionException;
+use TYPO3\Flow\Mvc\View\ViewInterface;
 use TYPO3\Flow\Security\Account;
 use TYPO3\Flow\Security\AccountRepository;
 use TYPO3\Flow\Security\Cryptography\HashService;
@@ -79,6 +79,8 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
 
     /**
      * @param User $user
+     * @throws StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function createAction(User $user)
     {
@@ -102,8 +104,30 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
     {
         $this->getGeneralViewVariables();
         $this->view->assign('user', $user);
+
+        $partials = [];
+        $data = [];
+        $this->emitRenderSettings($this->view, $user, $partials, $data);
+        $this->view->assign('additionalPartials', $partials);
+        $this->view->assignMultiple($data);
     }
 
+    /**
+     * @param ViewInterface $view
+     * @param User $user
+     * @param array $additionalPartials
+     * @param array $additionalPartialsData
+     * @return void
+     * @Flow\Signal
+     */
+    protected function emitRenderSettings(ViewInterface $view, User $user, &$additionalPartials, &$additionalPartialsData)
+    {}
+
+    /**
+     * @param User $user
+     * @throws StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     */
     public function updateAction(User $user)
     {
         foreach ($user->getAccounts() as $account) {
@@ -126,6 +150,7 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
      * @param string $newPassword
      * @param string $newPasswordDuplicate
      * @throws StopActionException
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
      */
     public function updatePasswordAction(Account $account, $newPassword, $newPasswordDuplicate)
     {
@@ -169,6 +194,9 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
         );
     }
 
+    /**
+     *
+     */
     public function getGeneralViewVariables()
     {
         $this->view->assign(
@@ -181,6 +209,10 @@ class UserController extends \TYPO3\Flow\Mvc\Controller\ActionController
         );
     }
 
+    /**
+     * @param User $user
+     * @throws \TYPO3\Flow\Persistence\Exception\IllegalObjectTypeException
+     */
     protected function fixMissingAccount(User $user)
     {
         if ($user->getAccounts()->count() === 0) {
