@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="de"
+      xmlns:f="http://typo3.org/ns/TYPO3/Fluid/ViewHelpers"
+      xmlns:kaystrobachmenu="http://typo3.org/ns/KayStrobach/Menu/ViewHelpers"
+      xmlns:fluege="http://typo3.org/ns/KayStrobach/Fluege/ViewHelpers"
+      xmlns:kaystrobachcustom="http://typo3.org/ns/KayStrobach/Custom/ViewHelpers">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>
+            <f:format.stripTags><f:render section="Title" optional="1" /></f:format.stripTags>
+        </title>
+
+        <!-- Bootstrap core CSS -->
+        <link href="{f:uri.resource(path:'Vorlagen/Bootstrap/css/bootstrap.min.css', package:'KayStrobach.Fluege')}" rel="stylesheet">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+        <script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/html5shiv.js', package:'KayStrobach.Fluege')}"></script>
+        <script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/respond.min.js', package:'KayStrobach.Fluege')}"></script>
+        <![endif]-->
+
+        <script src="{f:uri.resource(path:'Vorlagen/Bootstrap/js/jquery-1.10.2.min.js', package:'KayStrobach.Fluege')}"></script>
+
+        <f:render section="Header" optional="true" />
+        <f:base />
+    </head>
+
+    <body>
+        <f:render section="Content" />
+
+        <footer class="clearfix hidden-print">
+            <a href="http://www.4viewture.eu/">
+                &copy; 4viewture UG (haftungsbeschränkt)
+            </a>
+        </footer>
+        </div><!--/.container-->
+    </body>
+</html>

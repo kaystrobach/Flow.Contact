@@ -1,0 +1,31 @@
+<f:layout name="Minimal"/>
+
+<f:section name="Header">
+    <f:render partial="Layout/Header/AdditionalCss" arguments="{_all}" />
+</f:section>
+
+<f:section name="Title">
+    Anmelden
+</f:section>
+
+<f:section name="Content">
+    <f:form action="authenticate" method="post" id="formLogin" class="form-signin middleOfScreen">
+        <div class="container">
+            <div class="card card-container">
+                <img id="profile-img" class="profile-img-card" src="{f:uri.resource(path:settings.Layout.Icons.ProfileIcon.path)}" />
+                <p id="profile-name" class="profile-name-card">{settings.Layout.ApplicationName}</p>
+                <form class="form-signin">
+                    <f:render partial="Layout/FlashMessages" arguments="{_all}"/>
+                    <span id="reauth-email" class="reauth-email"></span>
+                    <input type="text" id="inputEmail" placeholder="Benutzername" required autofocus class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][username]" value="{username}">
+                    <input type="password" id="inputPassword" placeholder="Passwort" required class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][password]">
+                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
+                </form><!-- /form -->
+
+                <f:link.action controller="forgotPassword" action="index" class="forgot-password" arguments="{username:username}">
+                    Passwort vergessen?
+                </f:link.action>
+            </div>
+        </div>
+    </f:form>
+</f:section>

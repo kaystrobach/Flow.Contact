@@ -29,13 +29,6 @@ class MailUtility
 
     /**
      * @Flow\Inject
-     * @var \Neos\SwiftMailer\TransportFactory
-     * @api
-     */
-    protected $mailerTransportFactory = null;
-
-    /**
-     * @Flow\Inject
      * @var \Neos\Flow\Configuration\ConfigurationManager
      */
     protected $configurationManager;
@@ -60,9 +53,10 @@ class MailUtility
      *     html mail
      * </f:section>
      *
-     * @param string $recipientMail
+     * @param array|string $recipientMail
      * @param string $templateFilePath Pfad zum Fluid Template
-     * @param array $values    array mit Schlüssel => Objekt / Wert Zuordungen
+     * @param array $values array mit Schlüssel => Objekt / Wert Zuordungen
+     * @throws \Neos\FluidAdaptor\View\Exception\InvalidSectionException
      */
     public function send($recipientMail, $templateFilePath, $values = array(), $replyTo = null)
     {
@@ -72,9 +66,9 @@ class MailUtility
         $this->view->setTemplatePathAndFilename(FLOW_PATH_ROOT . 'Packages/Application/KayStrobach.Contact/Resources/Private/Mails/' . $templateFilePath . '.html');
         $this->view->assignMultiple($values);
 
-        $renderedMailSubject     = trim($this->view->renderSection('subject', null, true));
-        $renderedMailContentText = trim($this->view->renderSection('text', null, true));
-        $renderedMailContentHtml = trim($this->view->renderSection('html', null, true));
+        $renderedMailSubject     = trim($this->view->renderSection('subject', [], true));
+        $renderedMailContentText = trim($this->view->renderSection('text', [], true));
+        $renderedMailContentHtml = trim($this->view->renderSection('html', [], true));
 
         $mail = new \Neos\SwiftMailer\Message();
         $mail
@@ -95,7 +89,7 @@ class MailUtility
     protected function initConfiguration()
     {
         $this->settings = $this->configurationManager->getConfiguration(
-            \TYPO3\FLOW\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS,
+            \Neos\Flow\Configuration\ConfigurationManager::CONFIGURATION_TYPE_SETTINGS,
             'KayStrobach.Contact.MailUtility'
         );
     }

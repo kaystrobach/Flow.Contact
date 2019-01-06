@@ -1,0 +1,74 @@
+<html xmlns:requirejs="http://typo3.org/ns/KayStrobach/RequireJs/ViewHelpers"
+      xmlns:f="http://typo3.org/ns/Neos/FluidAdaptor/ViewHelpers"
+      xmlns:vuei="http://typo3.org/ns/KayStrobach/VueIntegration/ViewHelpers"
+>
+<f:layout name="Default" />
+
+<f:section name="Header">
+    <f:render partial="Layout/Header/AdditionalCss" arguments="{_all}" />
+</f:section>
+
+<f:section name="Title">Index view of AuthenticationController controller</f:section>
+
+<f:section name="postHead">
+    <link rel="stylesheet" href="{f:uri.resource(path:'Css/LoginForm.css', package:'KayStrobach.UserManagement')}">
+</f:section>
+
+<f:section name="ContentApp">
+    <template>
+        <f:form action="authenticate" controller="Authentication" package="KayStrobach.UserManagement" object="login">
+            <div class="centered-container">
+                <md-content class="md-elevation-3">
+
+                    <div class="title">
+                        <img src="{vuei:configuration(path: 'KayStrobach.VueIntegration.App.grafics.loginLogo')}">
+                        <div class="md-title">{vuei:configuration(path: 'KayStrobach.VueIntegration.App.strings.loginHead')}</div>
+                        <div class="md-body-1">{vuei:configuration(path: 'KayStrobach.VueIntegration.App.strings.loginSlug')}</div>
+                    </div>
+
+                    <div class="form">
+                        <md-field>
+                            <label>2 Factor Code</label>
+                            <md-input v-model="login.code" autofocus></md-input>
+                        </md-field>
+                    </div>
+
+                    <div class="actions md-layout md-alignment-center-space-between">
+                        <f:link.action action="login" controller="Authentication" package="KayStrobach.UserManagement">Abbrechen</f:link.action>
+                        <md-button class="md-raised md-primary">Login</md-button>
+                    </div>
+
+                    <div class="loading-overlay" v-if="loading">
+                        <md-progress-spinner md-mode="indeterminate" :md-stroke="2"></md-progress-spinner>
+                    </div>
+
+                </md-content>
+                <div class="background" />
+            </div>
+        </f:form>
+    </template>
+</f:section>
+
+<f:section name="postContent">
+    <script type="text/javascript">
+        require([
+            "vue",
+            //"vue-router",
+            "vue-material",
+        ], function(Vue, VueMaterial){
+
+            //Vue.use(VueRouter);
+            Vue.use(VueMaterial.default);
+
+            window.Vue = Vue; // to be detected for vue devtools
+
+            new Vue({
+                data: {
+                    "loading": false,
+                    "login": []
+                },
+                el: "#app"
+            });
+        });
+    </script>
+</f:section>

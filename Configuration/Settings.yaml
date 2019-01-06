@@ -3,3 +3,20 @@ KayStrobach:
     MailUtility:
       from:     noreply@example.org
       reply-to: noreply@example.org
+    AuthenticationController:
+      RedirectAfterSuccessfullLogin:
+        action: index
+        controller: user
+        package: 'KayStrobach.Contact'
+    Layout:
+      ApplicationName: "KayStrobach.Contact"
+      Logo:
+        path: "resource://KayStrobach.Contact/Public/Logo/4viewture-logo.png"
+      Icons:
+        ProfileIcon:
+          path: "resource://KayStrobach.Contact/Public/icons/user-circle.svg"
+        PasswordIcon:
+          path: "resource://KayStrobach.Contact/Public/icons/lock.svg"
+      CustomCss:
+        1000:
+          path: "resource://KayStrobach.Contact/Public/css/loginForm.css"

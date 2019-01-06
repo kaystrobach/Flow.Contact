@@ -6,7 +6,7 @@
     },
     "name": "kaystrobach/contact",
     "autoload": {
-        "psr-0": {
+        "psr-4": {
             "KayStrobach\\Contact": "Classes/"
         }
     },

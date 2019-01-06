@@ -1,0 +1,7 @@
+<f:flashMessages as="messages">
+    <f:for each="{messages}" as="message">
+        <div class="alert {f:if(condition:'{message.severity}==\'OK\'', then:'alert-success')}{f:if(condition:'{message.severity}==\'Error\'', then:'alert-danger')}{f:if(condition:'{message.severity}==\'Info\'', then:'alert-notice')}{f:if(condition:'{message.severity}==\'Warning\'', then:'alert-warning')}">
+            {message}
+        </div>
+    </f:for>
+</f:flashMessages>

@@ -8,7 +8,10 @@ privilegeTargets:
       matcher: 'method(KayStrobach\Contact\Controller\UserController->.*())'
     KayStrobach_Contact_ProfileController:
       matcher: 'method(KayStrobach\Contact\Controller\ProfileController->.*())'
-
+    KayStrobach_Contact_AuthenticationController:
+      matcher: 'method(KayStrobach\Contact\Controller\AuthenticationController->.*())'
+    KayStrobach_Contact_ForgotPasswordController:
+      matcher: 'method(KayStrobach\Contact\Controller\ForgotPasswordController->.*())'
 
 roles:
   'KayStrobach.Contact:Administrator':
@@ -30,4 +33,10 @@ roles:
     privileges:
       -
         privilegeTarget: KayStrobach_Contact_ProfileController
+        permission: GRANT
+  'Neos.Flow:Everybody':
+    privileges:
+      - privilegeTarget: KayStrobach_Contact_AuthenticationController
+        permission: GRANT
+      - privilegeTarget: KayStrobach_Contact_ForgotPasswordController
         permission: GRANT
