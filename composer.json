@@ -7,7 +7,7 @@
     "name": "kaystrobach/contact",
     "autoload": {
         "psr-4": {
-            "KayStrobach\\Contact": "Classes/"
+            "KayStrobach\\Contact\\": "Classes/"
         }
     },
     "extra": {
