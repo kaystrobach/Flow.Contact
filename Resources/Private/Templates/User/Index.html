@@ -44,23 +44,22 @@
                             </thead>
                             <tbody>
                             <f:for each="{paginatedUsers}" as="user">
-                                <tr class="{f:if(condition:'{user.accounts.0.isActive}', else:'danger')}">
+                                <tr>
                                     <td>
-                                        <f:if condition="{user.accounts.0.isActive}">
+                                        <f:if condition="{now} > {user.accounts.0.expirationDate}">
                                             <f:then>
-                                                <f:link.action action="edit" arguments="{user:user}">
-                                                    {user.contact.name.fullName}
-                                                </f:link.action>
-                                            </f:then>
-                                            <f:else>
                                                 <s>
                                                     <f:link.action action="edit" arguments="{user:user}">
                                                         {user.contact.name.fullName}
                                                     </f:link.action>
                                                 </s>
+                                            </f:then>
+                                            <f:else>
+                                                <f:link.action action="edit" arguments="{user:user}">
+                                                    {user.contact.name.fullName}
+                                                </f:link.action>
                                             </f:else>
                                         </f:if>
-
                                     </td>
                                     <td>
                                         <f:if condition="{user.accounts.0.accountIdentifier}">

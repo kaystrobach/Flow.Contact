@@ -64,6 +64,10 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function indexAction() {
         $this->view->assign(
+            'now',
+            new \DateTime('now')
+        );
+        $this->view->assign(
             'users',
             $this->userRepository->findByDefaultQuery()
         );
