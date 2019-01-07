@@ -6,14 +6,18 @@ namespace KayStrobach\Contact\Domain\Repository;
  */
 
 use KayStrobach\Contact\Domain\Model\Institution;
+use KayStrobach\VisualSearch\Domain\Repository\SearchableRepository;
 use Neos\Flow\Annotations as Flow;
-use Neos\Flow\Persistence\Repository;
 
 /**
  * @Flow\Scope("singleton")
  */
-class UserRepository extends Repository
+class UserRepository extends SearchableRepository
 {
+    /**
+     * @var string
+     */
+    protected $defaultSearchName = 'KayStrobach_Contact_User';
 
     /**
      * @param Institution $institution

@@ -1,0 +1,40 @@
+Searches:
+# ======================================================================================================================
+  KayStrobach_Contact_User:
+    search:
+      repository: KayStrobach\Contact\Domain\Repository\UserRepository
+    autocomplete:
+      searchtext:
+        label: "Suchtext"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - accounts.accountIdentifier
+            - contact.name.fullName
+      institution:
+        label: "Institution"
+        selector:
+          conditions:
+            once: true
+          labelProperty: name
+          orderBy: name
+          repository: KayStrobach\Contact\Domain\Repository\InstitutionRepository
+        matches:
+          equals:
+            - institution
+  KayStrobach_Contact_Institution:
+    search:
+      repository: KayStrobach\Contact\Domain\Repository\InstitutionRepository
+    autocomplete:
+      searchtext:
+        label: "Suchtext"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - name

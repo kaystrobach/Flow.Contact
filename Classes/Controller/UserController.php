@@ -65,7 +65,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
     public function indexAction() {
         $this->view->assign(
             'users',
-            $this->userRepository->findAll()
+            $this->userRepository->findByDefaultQuery()
         );
     }
 

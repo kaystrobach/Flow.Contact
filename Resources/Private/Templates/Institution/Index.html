@@ -18,33 +18,33 @@
 <f:section name="Content">
     <f:if condition="{institutions}">
         <f:then>
-            <div class="table-responsive" id="search-result-area">
-                    <f:widget.paginate objects="{institutions}" as="paginatedInstitutions"
-                                       configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
+            <f:render partial="Visualsearch/Search" arguments="{searchName:'KayStrobach_Contact_Institution', institutions:institutions}" contentAs="value">
+                <f:widget.paginate objects="{institutions}" as="paginatedInstitutions"
+                                   configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
 
-                        <small class="pull-right">{institutions -> f:count()} Einträge</small>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <f:for each="{paginatedInstitutions}" as="institution">
-                                    <tr>
-                                        <td>
-                                            <f:link.action action="edit" arguments="{institution:institution}">
-                                                {institution.name}
-                                            </f:link.action>
-                                        </td>
-                                    </tr>
-                                </f:for>
-                            </tbody>
-                        </table>
-                    </f:widget.paginate>
-            </div>
+                    <small class="pull-right">{institutions -> f:count()} Einträge</small>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <f:for each="{paginatedInstitutions}" as="institution">
+                            <tr>
+                                <td>
+                                    <f:link.action action="edit" arguments="{institution:institution}">
+                                        {institution.name}
+                                    </f:link.action>
+                                </td>
+                            </tr>
+                        </f:for>
+                        </tbody>
+                    </table>
+                </f:widget.paginate>
+            </f:render>
         </f:then>
         <f:else>
             <div class="alert alert-info">

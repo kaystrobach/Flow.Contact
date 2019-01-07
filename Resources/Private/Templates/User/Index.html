@@ -18,79 +18,79 @@
 <f:section name="Content">
     <f:if condition="{users}">
         <f:then>
-            <div class="table-responsive" id="search-result-area">
-                    <f:widget.paginate objects="{users}" as="paginatedUsers"
-                                       configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
-                        <small class="pull-right">{paginatedUsers -> f:count()} Einträge</small>
-                        <table class="table table-striped">
-                            <thead>
-                                <tr>
-                                    <th>
-                                        Name
-                                    </th>
-                                    <th>
-                                        Benutzername
-                                    </th>
-                                    <th>
-                                        Institution
-                                    </th>
-                                    <th>
-                                        Letztes Login
-                                    </th>
-                                    <th>
-                                        fehlerhafte Loginversuche
-                                    </th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <f:for each="{paginatedUsers}" as="user">
-                                    <tr class="{f:if(condition:'{user.accounts.0.isActive}', else:'danger')}">
-                                        <td>
-                                            <f:if condition="{user.accounts.0.isActive}">
-                                                <f:then>
-                                                    <f:link.action action="edit" arguments="{user:user}">
-                                                        {user.contact.name.fullName}
-                                                    </f:link.action>
-                                                </f:then>
-                                                <f:else>
-                                                    <s>
-                                                        <f:link.action action="edit" arguments="{user:user}">
-                                                            {user.contact.name.fullName}
-                                                        </f:link.action>
-                                                    </s>
-                                                </f:else>
-                                            </f:if>
-
-                                        </td>
-                                        <td>
-                                            <f:if condition="{user.accounts.0.accountIdentifier}">
-                                                <small>
-                                                    {user.accounts.0.accountIdentifier}
-                                                    <f:if condition="{user.accounts.0.expirationDate}">
-                                                        ({user.accounts.0.expirationDate -> f:format.date(format:'d.m.Y H:i')})
-                                                    </f:if>
-                                                </small>
-                                            </f:if>
-                                        </td>
-                                        <td>
-                                            <f:if condition="{user.institution}">
-                                                <f:link.action action="edit" controller="institution" arguments="{institution:user.institution}">
-                                                    {user.institution.name}
+            <f:render partial="Visualsearch/Search" arguments="{searchName:'KayStrobach_Contact_User', users:users}" contentAs="value">
+                <f:widget.paginate objects="{users}" as="paginatedUsers"
+                                   configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
+                    <small class="pull-right">{paginatedUsers -> f:count()} Einträge</small>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Benutzername
+                            </th>
+                            <th>
+                                Institution
+                            </th>
+                            <th>
+                                Letztes Login
+                            </th>
+                            <th>
+                                fehlerhafte Loginversuche
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <f:for each="{paginatedUsers}" as="user">
+                            <tr class="{f:if(condition:'{user.accounts.0.isActive}', else:'danger')}">
+                                <td>
+                                    <f:if condition="{user.accounts.0.isActive}">
+                                        <f:then>
+                                            <f:link.action action="edit" arguments="{user:user}">
+                                                {user.contact.name.fullName}
+                                            </f:link.action>
+                                        </f:then>
+                                        <f:else>
+                                            <s>
+                                                <f:link.action action="edit" arguments="{user:user}">
+                                                    {user.contact.name.fullName}
                                                 </f:link.action>
+                                            </s>
+                                        </f:else>
+                                    </f:if>
+
+                                </td>
+                                <td>
+                                    <f:if condition="{user.accounts.0.accountIdentifier}">
+                                        <small>
+                                            {user.accounts.0.accountIdentifier}
+                                            <f:if condition="{user.accounts.0.expirationDate}">
+                                                ({user.accounts.0.expirationDate -> f:format.date(format:'d.m.Y H:i')})
                                             </f:if>
-                                        </td>
-                                        <td>
-                                            {user.accounts.0.lastSuccessfulAuthenticationDate -> f:format.date(format:'d.m.Y H:i')}
-                                        </td>
-                                        <td>
-                                            {user.accounts.0.failedAuthenticationCount}
-                                        </td>
-                                    </tr>
-                                </f:for>
-                            </tbody>
-                        </table>
-                    </f:widget.paginate>
-            </div>
+                                        </small>
+                                    </f:if>
+                                </td>
+                                <td>
+                                    <f:if condition="{user.institution}">
+                                        <f:link.action action="edit" controller="institution" arguments="{institution:user.institution}">
+                                            {user.institution.name}
+                                        </f:link.action>
+                                    </f:if>
+                                </td>
+                                <td>
+                                    {user.accounts.0.lastSuccessfulAuthenticationDate -> f:format.date(format:'d.m.Y H:i')}
+                                </td>
+                                <td>
+                                    {user.accounts.0.failedAuthenticationCount}
+                                </td>
+                            </tr>
+                        </f:for>
+                        </tbody>
+                    </table>
+                </f:widget.paginate>
+            </f:render>
         </f:then>
         <f:else>
             <div class="alert alert-info">

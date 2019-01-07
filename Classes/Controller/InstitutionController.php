@@ -27,7 +27,7 @@ class InstitutionController extends \Neos\Flow\Mvc\Controller\ActionController
     public function indexAction() {
         $this->view->assign(
             'institutions',
-            $this->institutionRepository->findAll()
+            $this->institutionRepository->findByDefaultQuery()
         );
     }
 
