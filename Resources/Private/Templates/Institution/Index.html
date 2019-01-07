@@ -16,9 +16,10 @@
 </f:section>
 
 <f:section name="Content">
-    <f:if condition="{institutions}">
-        <f:then>
-            <f:render partial="Visualsearch/Search" arguments="{searchName:'KayStrobach_Contact_Institution', institutions:institutions}" contentAs="value">
+
+    <f:render partial="Visualsearch/Search" arguments="{searchName:'KayStrobach_Contact_Institution', institutions:institutions}" contentAs="value">
+        <f:if condition="{institutions}">
+            <f:then>
                 <f:widget.paginate objects="{institutions}" as="paginatedInstitutions"
                                    configuration="{itemsPerPage: 20, insertAbove: 1, insertBelow: 1, maximumNumberOfLinks: 15}">
 
@@ -44,14 +45,12 @@
                         </tbody>
                     </table>
                 </f:widget.paginate>
-            </f:render>
-        </f:then>
-        <f:else>
-            <div class="alert alert-info">
-                Es gibt leider noch keine Institutionen.
-            </div>
-        </f:else>
-    </f:if>
-
-
+            </f:then>
+            <f:else>
+                <div class="alert alert-info">
+                    Es gibt leider noch keine Institutionen.
+                </div>
+            </f:else>
+        </f:if>
+    </f:render>
 </f:section>
