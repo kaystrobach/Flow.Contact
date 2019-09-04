@@ -39,7 +39,7 @@
         </div>
     </div>
     <div class="col-sm-6">
-        <f:if condition="{user.accounts -> f:count()}">
+        <f:if condition="{user.accounts}">
             <f:then>
                 <f:for each="{user.accounts}" as="account" key="key">
                     <div class="panel panel-default">
