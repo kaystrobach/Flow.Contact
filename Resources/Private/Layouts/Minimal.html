@@ -10,6 +10,12 @@
         <meta name="description" content="">
         <meta name="author" content="">
 
+        <script type="text/javascript">
+            if (window.location !== window.parent.location) {
+                window.parent.location = window.location;
+            }
+        </script>
+          
         <title>
             <f:format.stripTags><f:render section="Title" optional="1" /></f:format.stripTags>
         </title>
