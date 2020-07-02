@@ -11,9 +11,13 @@ body, html {
 }
 
 .card-container.card {
-    max-width: 350px;
+    width: 95vw;
+    min-width: 250px;
+    max-width: 390px;
     padding: 40px 40px;
+
 }
+
 
 .btn {
     font-weight: 700;
