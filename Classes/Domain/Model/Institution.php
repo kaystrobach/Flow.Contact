@@ -67,6 +67,19 @@ class Institution
         $this->address = $address;
     }
 
+    public function getAddressWithName()
+    {
+        return implode(
+            chr(10),
+            [
+                $this->getName(),
+                '',
+                $this->getAddress()->getStreet() . ' ' . $this->getAddress()->getHouseNumber(),
+                $this->getAddress()->getZipCode() . ' ' . $this->getAddress()->getCity()
+            ]
+        );
+    }
+    
     /**
      * @return ArrayCollection
      */
