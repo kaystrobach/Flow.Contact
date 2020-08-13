@@ -9,6 +9,7 @@ use Neos\Flow\Annotations as Flow;
 use KayStrobach\Contact\Domain\Model\Institution;
 use Neos\Error\Messages\Message;
 use Neos\Flow\Mvc\Exception\StopActionException;
+use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Security\Account;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Cryptography\HashService;
@@ -106,6 +107,12 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
     {
         $this->getGeneralViewVariables();
         $this->view->assign('user', $user);
+
+        $partials = [];
+        $data = [];
+        $this->emitRenderSettings($this->view, $user, $partials, $data);
+        $this->view->assign('additionalPartials', $partials);
+        $this->view->assignMultiple($data);
     }
 
     public function updateAction(User $user)
@@ -198,4 +205,15 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
             $this->accountRepository->add($account);
         }
     }
+
+    /**
+     * @param ViewInterface $view
+     * @param User $user
+     * @param array $additionalPartials
+     * @param array $additionalPartialsData
+     * @return void
+     * @Flow\Signal
+     */
+    protected function emitRenderSettings(ViewInterface $view, User $user, &$additionalPartials, &$additionalPartialsData)
+    {}
 }

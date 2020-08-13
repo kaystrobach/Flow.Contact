@@ -13,4 +13,12 @@
     <f:for each="{user.accounts}" as="account">
         <f:render partial="User/Password" arguments="{account:account}" />
     </f:for>
+
+    <f:if condition="{additionalPartials}">
+        <f:for each="{additionalPartials}" as="partialName" iteration="iteration">
+            <div class="clearfix"></div>
+            <hr>
+            <f:render partial="{partialName}" arguments="{_all}" />
+        </f:for>
+    </f:if>
 </f:section>
