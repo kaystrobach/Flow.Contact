@@ -17,4 +17,12 @@
             Speichern
         </f:form.button>
     </f:form>
+
+    <f:if condition="{additionalPartials}">
+        <f:for each="{additionalPartials}" as="partialName" iteration="iteration">
+            <div class="clearfix"></div>
+            <hr>
+            <f:render partial="{partialName}" arguments="{_all}" />
+        </f:for>
+    </f:if>
 </f:section>
