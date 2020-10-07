@@ -46,13 +46,22 @@
                             <f:for each="{paginatedUsers}" as="user">
                                 <tr>
                                     <td>
-                                        <f:if condition="{now} > {user.accounts.0.expirationDate}">
+                                        <f:if condition="{user.accounts.0.expirationDate}">
                                             <f:then>
-                                                <s>
-                                                    <f:link.action action="edit" arguments="{user:user}">
-                                                        {user.contact.name.fullName}
-                                                    </f:link.action>
-                                                </s>
+                                                <f:if condition="{now} > {user.accounts.0.expirationDate}">
+                                                    <f:then>
+                                                        <s>
+                                                            <f:link.action action="edit" arguments="{user:user}">
+                                                                {user.contact.name.fullName}
+                                                            </f:link.action>
+                                                        </s>
+                                                    </f:then>
+                                                    <f:else>
+                                                        <f:link.action action="edit" arguments="{user:user}">
+                                                            {user.contact.name.fullName}
+                                                        </f:link.action>
+                                                    </f:else>
+                                                </f:if>
                                             </f:then>
                                             <f:else>
                                                 <f:link.action action="edit" arguments="{user:user}">
