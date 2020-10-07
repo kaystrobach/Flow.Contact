@@ -58,7 +58,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <label for="accounts.{key}.roles">Rollen</label>
-                                    <f:form.select property="accounts.{key}.roles" options="{roles}"  id="accounts.{key}.roles" optionLabelField="name" class="form-control" multiple="multiple" size="{roles -> f:count()}"/>
+                                    <f:form.select property="accounts.{key}.roles" options="{roles}"  id="accounts.{key}.roles" optionLabelField="identifier" sortByOptionLabel="1" class="form-control" multiple="multiple" size="{roles -> f:count()}"/>
                                 </div>
                             </div>
 
@@ -77,7 +77,7 @@
                             <div class="form-group">
                                 <div class="col-sm-12">
                                     <label for="accounts.{key}.expirationdate">Ablaufdatum</label>
-                                    
+
                                     <div class="input-group">
                                             <span class="input-group-addon">
                                                 <span class="glyphicon glyphicon-calendar"></span>
@@ -97,5 +97,3 @@
         </f:if>
     </div>
 </div>
-
-
