@@ -9,6 +9,7 @@ use Neos\Flow\Mvc\ActionRequest;
 use Neos\Flow\Mvc\Controller\ActionController;
 use Neos\Flow\Mvc\View\ViewInterface;
 use Neos\Flow\Security\Authentication\Controller\AbstractAuthenticationController;
+use Neos\Flow\Security\Cryptography\HashService;
 use Neos\Flow\Security\Exception\AuthenticationRequiredException;
 
 class AuthenticationController extends AbstractAuthenticationController
@@ -24,6 +25,12 @@ class AuthenticationController extends AbstractAuthenticationController
      * @var array
      */
     protected $settings;
+
+    /**
+     * @Flow\Inject
+     * @var HashService
+     */
+    protected $hashService;
 
     protected function initializeView(ViewInterface $view)
     {
@@ -78,19 +85,31 @@ class AuthenticationController extends AbstractAuthenticationController
      */
     protected function onAuthenticationSuccess(ActionRequest $originalRequest = null)
     {
-        if ($originalRequest !== null) {
+        $configuration = $this->settings['AuthenticationController'];
+
+        if (($configuration['RedirectMode'] === 'redirectToOriginalRequest') && ($originalRequest !== null)) {
             $this->redirectToRequest($originalRequest);
         }
 
-        $configuration = $this->configurationManager->getConfiguration(
-            ConfigurationManager::CONFIGURATION_TYPE_SETTINGS,
-            'KayStrobach.Contact.AuthenticationController.RedirectAfterSuccessfullLogin'
-        );
+        $arguments = [];
+        if (($configuration['RedirectMode'] === 'appendOriginalRequest') && ($originalRequest !== null)) {
+            $this->securityContext->setInterceptedRequest($originalRequest);
+            $arguments = [
+                '__referer' => [
+                    '@package' => $originalRequest->getControllerPackageKey(),
+                    '@subpackage' => $originalRequest->getControllerSubpackageKey(),
+                    '@controller' => $originalRequest->getControllerName(),
+                    '@action' => $originalRequest->getControllerActionName(),
+                    'arguments' => $this->hashService->appendHmac(base64_encode(serialize($originalRequest->getArguments())))
+                ]
+            ];
+        }
 
         $this->redirect(
-            $configuration['action'],
-            $configuration['controller'],
-            $configuration['package']
+            $configuration['RedirectAfterSuccessfullLogin']['action'],
+            $configuration['RedirectAfterSuccessfullLogin']['controller'],
+            $configuration['RedirectAfterSuccessfullLogin']['package'],
+            $arguments
         );
     }
 

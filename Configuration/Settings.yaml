@@ -4,6 +4,11 @@ KayStrobach:
       from:     noreply@example.org
       reply-to: noreply@example.org
     AuthenticationController:
+      # defines how the redirect is going to happen
+      #
+      # * redirectToOriginalRequest --> will directly redirect to the original request
+      # * appendOriginalRequest     --> will use an intermediate request for redirection, e.g. an iframe
+      RedirectMode: redirectToOriginalRequest
       RedirectAfterSuccessfullLogin:
         action: index
         controller: user
