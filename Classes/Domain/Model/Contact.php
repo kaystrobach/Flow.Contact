@@ -1,18 +1,28 @@
 <?php
 namespace KayStrobach\Contact\Domain\Model;
 
+use KayStrobach\Contact\Domain\Traits\ContactPhoneTrait;
 use KayStrobach\Contact\Domain\Traits\ContactTrait;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
+use Neos\Party\Domain\Model\ElectronicAddress;
+use Neos\Party\Domain\Model\Person;
 use Neos\Party\Domain\Model\PersonName;
+use Neos\Utility\ObjectAccess;
 
 /**
  * @Flow\Entity
  */
 class Contact
 {
-    use ContactTrait;
+    use ContactPhoneTrait;
+
+    /**
+     * @ORM\OneToOne(cascade={"all"}, mappedBy="contact", fetch="EAGER")
+     * @var User
+     */
+    protected $user;
 
     /**
      * @var PersonName
@@ -35,19 +45,50 @@ class Contact
     protected $address;
 
     /**
+     * @deprecated
+     * @return string
+     */
+    public function getEmail()
+    {
+        return ObjectAccess::getPropertyPath($this->getUser(), 'primaryElectronicAddress.identifier');
+    }
+
+    /**
+     * @deprecated
+     * @param string $email
+     * @return void
+     */
+    public function setEmail(string $email)
+    {
+        if (!$this->getUser()->getPrimaryElectronicAddress()) {
+            $ea = new ElectronicAddress();
+            $ea->setType(ElectronicAddress::TYPE_EMAIL);
+            $ea->setApproved(true);
+            $ea->setUsage(ElectronicAddress::USAGE_WORK);
+            $this->getUser()->setPrimaryElectronicAddress($ea);
+        }
+        $this->getUser()->getPrimaryElectronicAddress()->setIdentifier($email);
+    }
+
+    /**
+     * @deprecated
      * @return PersonName
      */
     public function getName()
     {
-        return $this->name;
+        if ($this->user->getName() === null) {
+            $this->user->setName(new PersonName());
+        }
+        return $this->user->getName();
     }
 
     /**
+     * @deprecated
      * @param PersonName $name
      */
-    public function setName($name)
+    public function setName(PersonName $name)
     {
-        $this->name = $name;
+        $this->user->setName($name);
     }
 
     /**
@@ -80,5 +121,21 @@ class Contact
     public function setAddress($address)
     {
         $this->address = $address;
+    }
+
+    /**
+     * @return User
+     */
+    public function getUser(): User
+    {
+        return $this->user;
+    }
+
+    /**
+     * @param User $user
+     */
+    public function setUser(User $user): void
+    {
+        $this->user = $user;
     }
 }

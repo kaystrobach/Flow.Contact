@@ -4,17 +4,18 @@ namespace KayStrobach\Contact\Domain\Model;
 
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
 use Neos\Party\Domain\Model\AbstractParty;
+use Neos\Party\Domain\Model\Person;
 
 /**
  * @Flow\Entity
+ * @ORM\HasLifecycleCallbacks()
  */
-class User extends AbstractParty
+class User extends Person
 {
     /**
      * @var \KayStrobach\Contact\Domain\Model\Contact
-     * @ORM\OneToOne(cascade={"all"})
+     * @ORM\OneToOne(cascade={"all"}, inversedBy="user")
      */
     protected $contact;
 
@@ -68,4 +69,12 @@ class User extends AbstractParty
         $this->accounts = $accounts;
     }
 
+    /**
+     * @ORM\PostLoad()
+     * @return void
+     */
+    public function postInitialize()
+    {
+        $this->contact->setUser($this);
+    }
 }
