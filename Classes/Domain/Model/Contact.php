@@ -88,6 +88,9 @@ class Contact
      */
     public function setName(PersonName $name)
     {
+        if ($this->user->getName() === null) {
+            $this->user->setName(new PersonName());
+        }
         $this->user->setName($name);
     }
 
