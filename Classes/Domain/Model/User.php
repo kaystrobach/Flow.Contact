@@ -6,6 +6,7 @@ use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Party\Domain\Model\AbstractParty;
 use Neos\Party\Domain\Model\Person;
+use Neos\Party\Domain\Model\PersonName;
 
 /**
  * @Flow\Entity
@@ -30,6 +31,9 @@ class User extends Person
      */
     public function getContact()
     {
+        if ($this->contact !== null) {
+            $this->contact->setUser($this);
+        }
         return $this->contact;
     }
 
@@ -76,5 +80,35 @@ class User extends Person
     public function postInitialize()
     {
         $this->contact->setUser($this);
+    }
+
+    /**
+     * Sets the current name of this person
+     *
+     * @param PersonName $name Name of this person
+     * @return void
+     */
+    public function setName(PersonName $name)
+    {
+        if ($name->getFullName() !== '') {
+            $this->name = $name;
+            if ($this->getContact() !== null) {
+                $this->getContact()->setName($name);
+            }
+        }
+    }
+
+    /**
+     * @ORM\PostLoad()
+     * @return void
+     */
+    public function postLoad()
+    {
+        $this->contact->setUser($this);
+    }
+
+    public function prePersist()
+    {
+        $this->contact->setName($this->name);
     }
 }
