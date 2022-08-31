@@ -88,10 +88,10 @@ class Contact
      */
     public function setName(PersonName $name)
     {
-        if ($this->getUser()->getName() === null) {
-            $this->getUser()->setName(new PersonName());
+        if ($name->getFullName() !== '') {
+            $this->name = $name;
+            $this->getUser()->setName($name);
         }
-        $this->getUser()->setName($name);
     }
 
     /**
@@ -133,6 +133,7 @@ class Contact
     {
         if ($this->user === null) {
             $this->user = new User();
+            $this->user->setName(new PersonName());
         }
         return $this->user;
     }
