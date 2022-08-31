@@ -76,10 +76,10 @@ class Contact
      */
     public function getName()
     {
-        if ($this->user->getName() === null) {
-            $this->user->setName(new PersonName());
+        if ($this->getUser()->getName() === null) {
+            $this->getUser()->setName(new PersonName());
         }
-        return $this->user->getName();
+        return $this->getUser()->getName();
     }
 
     /**
@@ -88,10 +88,10 @@ class Contact
      */
     public function setName(PersonName $name)
     {
-        if ($this->user->getName() === null) {
-            $this->user->setName(new PersonName());
+        if ($this->getUser()->getName() === null) {
+            $this->getUser()->setName(new PersonName());
         }
-        $this->user->setName($name);
+        $this->getUser()->setName($name);
     }
 
     /**
@@ -131,6 +131,9 @@ class Contact
      */
     public function getUser(): User
     {
+        if ($this->user === null) {
+            $this->user = new User();
+        }
         return $this->user;
     }
 
