@@ -90,7 +90,9 @@ class Contact
     {
         if ($name->getFullName() !== '') {
             $this->name = $name;
-            $this->getUser()->setName($name);
+            if ($this->getUser()->getName() !== $name) {
+                $this->getUser()->setName($name);
+            }
         }
     }
 
