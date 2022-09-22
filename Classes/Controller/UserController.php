@@ -87,6 +87,13 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function createAction(User $user)
     {
+        // @todo remove that workaround for the long term
+
+        $user->getContact()->setUser($user);
+        $user->getContact()->setEmail($user->getContact()->getEmail());
+
+        // end
+
         $this->fixMissingAccount($user);
         $this->userRepository->add($user);
         $this->redirect(
