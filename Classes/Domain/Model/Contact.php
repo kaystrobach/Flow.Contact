@@ -25,6 +25,12 @@ class Contact
     protected $user;
 
     /**
+     * @Flow\Transient
+     * @var string
+     */
+    protected $email;
+
+    /**
      * @var PersonName
      * @ORM\Column(nullable=true)
      * @ORM\OneToOne(cascade={"all"})
@@ -50,7 +56,11 @@ class Contact
      */
     public function getEmail()
     {
-        return ObjectAccess::getPropertyPath($this->getUser(), 'primaryElectronicAddress.identifier');
+        $email = ObjectAccess::getPropertyPath($this->getUser(), 'primaryElectronicAddress.identifier');
+        if ($email === null || $email === '') {
+            $email = $this->email;
+        }
+        return $email;
     }
 
     /**
@@ -60,11 +70,12 @@ class Contact
      */
     public function setEmail(string $email)
     {
+        $this->email = $email;
         if (!$this->getUser()->getPrimaryElectronicAddress()) {
             $ea = new ElectronicAddress();
-            $ea->setType(ElectronicAddress::TYPE_EMAIL);
+            $ea->setType('Email');
             $ea->setApproved(true);
-            $ea->setUsage(ElectronicAddress::USAGE_WORK);
+            $ea->setUsage('Work');
             $this->getUser()->setPrimaryElectronicAddress($ea);
         }
         $this->getUser()->getPrimaryElectronicAddress()->setIdentifier($email);
