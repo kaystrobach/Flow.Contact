@@ -5,6 +5,7 @@ namespace KayStrobach\Contact\Domain\Model;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Party\Domain\Model\AbstractParty;
+use Neos\Party\Domain\Model\ElectronicAddress;
 use Neos\Party\Domain\Model\Person;
 use Neos\Party\Domain\Model\PersonName;
 
@@ -43,6 +44,7 @@ class User extends Person
      */
     public function setContact(\KayStrobach\Contact\Domain\Model\Contact $contact)
     {
+        $contact->setUser($this);
         $this->contact = $contact;
     }
 
