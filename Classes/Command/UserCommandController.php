@@ -87,9 +87,14 @@ class UserCommandController extends \Neos\Flow\Cli\CommandController
         } else {
             $user = new User();
             $user->setContact(new Contact());
-            $user->getContact()->setName(new PersonName());
-            $user->getContact()->getName()->setFirstName($firstName);
-            $user->getContact()->getName()->setLastName($lastName);
+            $user->setName(
+                new PersonName(
+                '',
+                    $firstName,
+                '',
+                    $lastName
+                )
+            );
 
             $account = $this->accountFactory->createAccountWithPassword(
                 $username,
