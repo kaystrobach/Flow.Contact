@@ -2,7 +2,7 @@
     "description": "Add description here",
     "type": "neos-package",
     "require": {
-        "neos/flow": "^7.0",
+        "neos/flow": "^7.0 || ^8.3",
         "kaystrobach/visualsearch": "~2.0"
     },
     "name": "kaystrobach/contact",
