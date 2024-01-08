@@ -3,6 +3,7 @@
 namespace KayStrobach\Contact\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use KayStrobach\Contact\Domain\Embeddable\AddressEmbeddable;
 use KayStrobach\Contact\Domain\Traits\ContactTrait;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
@@ -13,7 +14,7 @@ use Gedmo\Mapping\Annotation as Gedmo;
  */
 class Institution
 {
-    use ContactTrait;
+    // @todo fix this use ContactTrait;
 
     /**
      * @var string
@@ -23,9 +24,8 @@ class Institution
     protected $name;
 
     /**
-     * @ORM\Column(nullable=true)
-     * @ORM\OneToOne(cascade={"all"})
-     * @var \KayStrobach\Contact\Domain\Model\Address
+     * @ORM\Embedded(columnPrefix="address_")
+     * @var AddressEmbeddable
      */
     protected $address;
 
@@ -34,6 +34,11 @@ class Institution
      * @ORM\OneToMany(mappedBy="institution")
      */
     protected $users;
+
+    public function __construct()
+    {
+        $this->address = new AddressEmbeddable();
+    }
 
     /**
      * @return string
@@ -51,23 +56,17 @@ class Institution
         $this->name = $name;
     }
 
-    /**
-     * @return Address
-     */
-    public function getAddress()
+    public function getAddress(): AddressEmbeddable
     {
         return $this->address;
     }
 
-    /**
-     * @param Address $address
-     */
-    public function setAddress($address)
+    public function setAddress(AddressEmbeddable $address): void
     {
         $this->address = $address;
     }
 
-    public function getAddressWithName()
+    public function getAddressWithName(): string
     {
         return implode(
             chr(10),
@@ -79,7 +78,7 @@ class Institution
             ]
         );
     }
-    
+
     /**
      * @return ArrayCollection
      */
