@@ -87,13 +87,6 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function createAction(User $user)
     {
-        // @todo remove that workaround for the long term
-
-        $user->getContact()->setUser($user);
-        $user->getContact()->setEmail($user->getContact()->getEmail());
-
-        // end
-
         $this->fixMissingAccount($user);
         $this->userRepository->add($user);
         $this->redirect(
@@ -147,8 +140,8 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function updatePasswordAction(Account $account, $newPassword, $newPasswordDuplicate)
     {
-        if(strlen($newPassword) < 6) {
-            $this->addFlashMessage('6 Zeichen sind das minimum für ein Passwort.', '', Message::SEVERITY_ERROR);
+        if(strlen($newPassword) < 8) {
+            $this->addFlashMessage('8 Zeichen sind das minimum für ein Passwort.', '', Message::SEVERITY_ERROR);
             $this->redirect(
                 'edit',
                 null,
@@ -187,7 +180,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
         );
     }
 
-    public function getGeneralViewVariables()
+    protected function getGeneralViewVariables()
     {
         $this->view->assign(
             'institutions',
@@ -222,5 +215,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      * @Flow\Signal
      */
     protected function emitRenderSettings(ViewInterface $view, User $user, &$additionalPartials, &$additionalPartialsData)
-    {}
+    {
+
+    }
 }
