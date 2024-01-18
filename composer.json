@@ -3,6 +3,8 @@
     "type": "neos-package",
     "require": {
         "neos/flow": "^7.0 || ^8.3",
+        "neos/party": "*",
+        "neos/media": "*",
         "kaystrobach/visualsearch": "~2.0"
     },
     "name": "kaystrobach/contact",
