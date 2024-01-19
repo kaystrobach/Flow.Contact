@@ -1,54 +1,23 @@
 <?php
 namespace KayStrobach\Contact\Domain\Model;
 
-use KayStrobach\Contact\Domain\Traits\ContactPhoneTrait;
-use KayStrobach\Contact\Domain\Traits\ContactTrait;
-use Neos\Flow\Annotations as Flow;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-use Neos\Party\Domain\Model\ElectronicAddress;
-use Neos\Party\Domain\Model\Person;
 use Neos\Party\Domain\Model\PersonName;
-use Neos\Utility\ObjectAccess;
 
 /**
- * @Flow\Entity
+ * @deprecated
  */
 class Contact
 {
-    use ContactPhoneTrait;
+    protected User $user;
+    protected Address $address;
 
-    /**
-     * @ORM\OneToOne(cascade={"all"}, mappedBy="contact", fetch="EAGER")
-     * @var User
-     */
-    protected $user;
-
-    /**
-     * @Flow\Transient
-     * @var string
-     */
-    protected $email;
-
-    /**
-     * @var PersonName
-     * @ORM\Column(nullable=true)
-     * @ORM\OneToOne(cascade={"all"})
-     */
-    protected $name;
-
-    /**
-     * @var string
-     * @Flow\Validate(type="String")
-     */
-    protected $position = '';
-
-    /**
-     * @ORM\Column(nullable=true)
-     * @ORM\OneToOne(cascade={"all"})
-     * @var \KayStrobach\Contact\Domain\Model\Address
-     */
-    protected $address;
+    public function __construct(
+        User $user
+    )
+    {
+        $this->user = $user;
+        $this->address = Address::fromUser($user);
+    }
 
     /**
      * @deprecated
@@ -56,30 +25,9 @@ class Contact
      */
     public function getEmail()
     {
-        $email = ObjectAccess::getPropertyPath($this->getUser(), 'primaryElectronicAddress.identifier');
-        if ($email === null || $email === '') {
-            $email = $this->email;
-        }
-        return $email;
+        return $this->user->getPrimaryElectronicAddress()->getIdentifier();
     }
 
-    /**
-     * @deprecated
-     * @param string $email
-     * @return void
-     */
-    public function setEmail(string $email)
-    {
-        $this->email = $email;
-        if (!$this->getUser()->getPrimaryElectronicAddress()) {
-            $ea = new ElectronicAddress();
-            $ea->setType('Email');
-            $ea->setApproved(true);
-            $ea->setUsage('Work');
-            $this->getUser()->setPrimaryElectronicAddress($ea);
-        }
-        $this->getUser()->getPrimaryElectronicAddress()->setIdentifier($email);
-    }
 
     /**
      * @deprecated
@@ -87,24 +35,7 @@ class Contact
      */
     public function getName()
     {
-        if ($this->getUser()->getName() === null) {
-            $this->getUser()->setName(new PersonName());
-        }
-        return $this->getUser()->getName();
-    }
-
-    /**
-     * @deprecated
-     * @param PersonName $name
-     */
-    public function setName(PersonName $name)
-    {
-        if ($name->getFullName() !== '') {
-            $this->name = $name;
-            if ($this->getUser()->getName() !== $name) {
-                $this->getUser()->setName($name);
-            }
-        }
+        return $this->user->getName();
     }
 
     /**
@@ -112,15 +43,7 @@ class Contact
      */
     public function getPosition()
     {
-        return $this->position;
-    }
-
-    /**
-     * @param string $position
-     */
-    public function setPosition($position)
-    {
-        $this->position = $position;
+        return $this->user->getInstitutionPosition();
     }
 
     /**
@@ -132,30 +55,27 @@ class Contact
     }
 
     /**
-     * @param Address $address
-     */
-    public function setAddress($address)
-    {
-        $this->address = $address;
-    }
-
-    /**
      * @return User
      */
     public function getUser(): User
     {
-        if ($this->user === null) {
-            $this->user = new User();
-            $this->user->setName(new PersonName());
-        }
         return $this->user;
     }
 
-    /**
-     * @param User $user
-     */
-    public function setUser(User $user): void
+    public static function fromUser(User $user): self
     {
-        $this->user = $user;
+        return new Contact(
+            $user
+        );
+    }
+
+    public function getPhone()
+    {
+        return $this->user->getPhone()->getLandline();
+    }
+
+    public function getMobile()
+    {
+        return $this->user->getPhone()->getMobile();
     }
 }
