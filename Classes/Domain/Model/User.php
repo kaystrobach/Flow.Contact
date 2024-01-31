@@ -34,6 +34,12 @@ class User extends Person
     protected $phone;
 
     /**
+     * @ORM\Embedded(columnPrefix="phone_private_")
+     * @var PhoneEmbeddable
+     */
+    protected $phonePrivate;
+
+    /**
      * @var \KayStrobach\Contact\Domain\Model\Institution
      * @ORM\ManyToOne(cascade={"persist"}, inversedBy="users")
      */
@@ -51,6 +57,7 @@ class User extends Person
         $this->address = new AddressEmbeddable();
         $this->salutation = new SalutationEmbeddable();
         $this->phone = new PhoneEmbeddable();
+        $this->phonePrivate = new PhoneEmbeddable();
     }
 
     /**
@@ -129,6 +136,16 @@ class User extends Person
     public function setInstitutionPosition(string $institutionPosition): void
     {
         $this->institutionPosition = $institutionPosition;
+    }
+
+    public function getPhonePrivate(): PhoneEmbeddable
+    {
+        return $this->phonePrivate;
+    }
+
+    public function setPhonePrivate(PhoneEmbeddable $phonePrivate): void
+    {
+        $this->phonePrivate = $phonePrivate;
     }
 
     public function prePersist()
