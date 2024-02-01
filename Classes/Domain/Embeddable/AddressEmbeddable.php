@@ -192,7 +192,7 @@ class AddressEmbeddable
      * @ORM\PrePersist()
      * @return void
      */
-    public function updateCombinedAdress(PersonName $personname): void
+    public function updateCombinedAdress(string $personname): void
     {
         if ($this->getStreet() === '') {
             return;
@@ -200,7 +200,8 @@ class AddressEmbeddable
         $this->combinedAddress = implode(
             PHP_EOL,
             [
-                $personname->getFullName(),
+                $personname,
+                '',
                 $this->street . ' ' . $this->houseNumber,
                 $this->roomNumber,
                 $this->addressAddon,
