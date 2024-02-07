@@ -2,74 +2,33 @@
 
 namespace KayStrobach\Contact\Domain\Model;
 
-use Neos\Flow\Annotations as Flow;
-use Doctrine\ORM\Mapping as ORM;
-use Gedmo\Mapping\Annotation as Gedmo;
-
 /**
- * @Flow\Entity
+ * @deprecated
  */
 class Address
 {
-    /**
-     * @var string
-     * @Flow\Validate(type="String")
-     * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255},validationGroups={"KontaktAnschrift"})
-     */
-    protected $street = '';
+    protected User $user;
 
-    /**
-     * @var string
-     * @Flow\Validate(type="String")
-     * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255},validationGroups={"KontaktAnschrift"})
-     */
-    protected $houseNumber = '';
+    public function __construct(
+        User $user
+    )
+    {
+        $this->user = $user;
+    }
 
-    /**
-     * @var string
-     * @Flow\Validate(type="StringLength", options={ "minimum"=0, "maximum"=255})
-     */
-    protected $addressAddon = '';
-
-    /**
-     * @var string
-     * @Flow\Validate(type="String")
-     */
-    protected $roomNumber = '';
-
-    /**
-     * @var string
-     * @Flow\Validate(type="Number")
-     * @Flow\Validate(type="StringLength", options={ "minimum"=5, "maximum"=5},validationGroups={"KontaktAnschrift"})
-     */
-    protected $zipCode = '';
-
-    /**
-     * @var string
-     */
-    protected $city = '';
-
-    /**
-     * @Flow\Validate(type="String")
-     * @Flow\Validate(type="StringLength", options={ "minimum"=1, "maximum"=255},validationGroups={"KontaktAnschrift"})
-     * @var string
-     */
-    protected $country = '';
+    public static function fromUser(User $user): self
+    {
+        return new Address(
+            $user
+        );
+    }
 
     /**
      * @return string
      */
     public function getStreet()
     {
-        return $this->street;
-    }
-
-    /**
-     * @param string $street
-     */
-    public function setStreet($street)
-    {
-        $this->street = $street;
+        return $this->user->getAddress()->getStreet();
     }
 
     /**
@@ -77,31 +36,16 @@ class Address
      */
     public function getHouseNumber()
     {
-        return $this->houseNumber;
+        return $this->user->getAddress()->getHouseNumber();
     }
 
-    /**
-     * @param string $houseNumber
-     */
-    public function setHouseNumber($houseNumber)
-    {
-        $this->houseNumber = $houseNumber;
-    }
 
     /**
      * @return string
      */
     public function getAddressAddon()
     {
-        return $this->addressAddon;
-    }
-
-    /**
-     * @param string $addressAddon
-     */
-    public function setAddressAddon($addressAddon)
-    {
-        $this->addressAddon = $addressAddon;
+        return $this->user->getAddress()->getAddressAddon();
     }
 
     /**
@@ -109,15 +53,7 @@ class Address
      */
     public function getRoomNumber()
     {
-        return $this->roomNumber;
-    }
-
-    /**
-     * @param string $roomNumber
-     */
-    public function setRoomNumber($roomNumber)
-    {
-        $this->roomNumber = $roomNumber;
+        return $this->user->getAddress()->getRoomNumber();
     }
 
     /**
@@ -125,15 +61,7 @@ class Address
      */
     public function getZipCode()
     {
-        return $this->zipCode;
-    }
-
-    /**
-     * @param string $zipCode
-     */
-    public function setZipCode($zipCode)
-    {
-        $this->zipCode = $zipCode;
+        return $this->user->getAddress()->getZipCode();
     }
 
     /**
@@ -141,15 +69,7 @@ class Address
      */
     public function getCity()
     {
-        return $this->city;
-    }
-
-    /**
-     * @param string $city
-     */
-    public function setCity($city)
-    {
-        $this->city = $city;
+        return $this->user->getAddress()->getCity();
     }
 
     /**
@@ -157,14 +77,6 @@ class Address
      */
     public function getCountry()
     {
-        return $this->country;
-    }
-
-    /**
-     * @param string $country
-     */
-    public function setCountry($country)
-    {
-        $this->country = $country;
+        return $this->user->getAddress()->getCountry();
     }
 }

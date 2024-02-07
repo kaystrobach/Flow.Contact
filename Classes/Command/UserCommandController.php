@@ -57,7 +57,7 @@ class UserCommandController extends \Neos\Flow\Cli\CommandController
         $users = $this->userRepository->findAll();
         /** @var User $user */
         foreach ($users as $user) {
-            $this->outputLine('  ' . $user->getContact()->getName()->getFullName());
+            $this->outputLine('  ' . $user->getName()->getFullName());
         }
     }
 
@@ -86,7 +86,6 @@ class UserCommandController extends \Neos\Flow\Cli\CommandController
             $this->outputFormatted('User: <em>' . $username . '</em> already existing ... now with password "' . $password . '".');
         } else {
             $user = new User();
-            $user->setContact(new Contact());
             $user->setName(
                 new PersonName(
                 '',

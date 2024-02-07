@@ -2,12 +2,12 @@
 
 namespace KayStrobach\Contact\Domain\Model;
 
+use KayStrobach\Contact\Domain\Embeddable\AddressEmbeddable;
+use KayStrobach\Contact\Domain\Embeddable\PhoneEmbeddable;
+use KayStrobach\Contact\Domain\Embeddable\SalutationEmbeddable;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
-use Neos\Party\Domain\Model\AbstractParty;
-use Neos\Party\Domain\Model\ElectronicAddress;
 use Neos\Party\Domain\Model\Person;
-use Neos\Party\Domain\Model\PersonName;
 
 /**
  * @Flow\Entity
@@ -16,10 +16,28 @@ use Neos\Party\Domain\Model\PersonName;
 class User extends Person
 {
     /**
-     * @var \KayStrobach\Contact\Domain\Model\Contact
-     * @ORM\OneToOne(cascade={"all"}, inversedBy="user")
+     * @ORM\Embedded(columnPrefix="address_")
+     * @var AddressEmbeddable
      */
-    protected $contact;
+    protected $address;
+
+    /**
+     * @ORM\Embedded(columnPrefix="salutation_")
+     * @var SalutationEmbeddable
+     */
+    protected $salutation;
+
+    /**
+     * @ORM\Embedded(columnPrefix="phone_")
+     * @var PhoneEmbeddable
+     */
+    protected $phone;
+
+    /**
+     * @ORM\Embedded(columnPrefix="phone_private_")
+     * @var PhoneEmbeddable
+     */
+    protected $phonePrivate;
 
     /**
      * @var \KayStrobach\Contact\Domain\Model\Institution
@@ -28,24 +46,18 @@ class User extends Person
     protected $institution;
 
     /**
-     * @return \KayStrobach\Contact\Domain\Model\Contact
+     * @var string
+     * @Flow\Validate(type="String")
      */
-    public function getContact()
-    {
-        if ($this->contact !== null) {
-            $this->contact->setUser($this);
-        }
-        return $this->contact;
-    }
+    protected string $institutionPosition = '';
 
-    /**
-     * @param \KayStrobach\Contact\Domain\Model\Contact $contact
-     * @return void
-     */
-    public function setContact(\KayStrobach\Contact\Domain\Model\Contact $contact)
+    public function __construct()
     {
-        $contact->setUser($this);
-        $this->contact = $contact;
+        parent::__construct();
+        $this->address = new AddressEmbeddable();
+        $this->salutation = new SalutationEmbeddable();
+        $this->phone = new PhoneEmbeddable();
+        $this->phonePrivate = new PhoneEmbeddable();
     }
 
     /**
@@ -76,41 +88,70 @@ class User extends Person
     }
 
     /**
-     * @ORM\PostLoad()
-     * @return void
+     * @deprecated
+     * @return Contact
      */
-    public function postInitialize()
+    public function getContact(): Contact
     {
-        $this->contact->setUser($this);
+        return Contact::fromUser(
+            $this
+        );
     }
 
-    /**
-     * Sets the current name of this person
-     *
-     * @param PersonName $name Name of this person
-     * @return void
-     */
-    public function setName(PersonName $name)
+    public function getAddress(): AddressEmbeddable
     {
-        if ($name->getFullName() !== '') {
-            $this->name = $name;
-            if ($this->getContact() !== null) {
-                $this->getContact()->setName($name);
-            }
-        }
+        return $this->address;
     }
 
-    /**
-     * @ORM\PostLoad()
-     * @return void
-     */
-    public function postLoad()
+    public function setAddress(AddressEmbeddable $address): void
     {
-        $this->contact->setUser($this);
+        $this->address = $address;
+    }
+
+    public function getSalutation(): SalutationEmbeddable
+    {
+        return $this->salutation;
+    }
+
+    public function setSalutation(SalutationEmbeddable $salutation): void
+    {
+        $this->salutation = $salutation;
+    }
+
+    public function getPhone(): PhoneEmbeddable
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(PhoneEmbeddable $phone): void
+    {
+        $this->phone = $phone;
+    }
+
+    public function getInstitutionPosition(): string
+    {
+        return $this->institutionPosition;
+    }
+
+    public function setInstitutionPosition(string $institutionPosition): void
+    {
+        $this->institutionPosition = $institutionPosition;
+    }
+
+    public function getPhonePrivate(): PhoneEmbeddable
+    {
+        return $this->phonePrivate;
+    }
+
+    public function setPhonePrivate(PhoneEmbeddable $phonePrivate): void
+    {
+        $this->phonePrivate = $phonePrivate;
     }
 
     public function prePersist()
     {
-        $this->contact->setName($this->name);
+        if ($this->getName()->getFullName() !== '') {
+            $this->address->updateCombinedAdress($this->getName());
+        }
     }
 }

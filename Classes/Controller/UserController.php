@@ -14,6 +14,7 @@ use Neos\Flow\Security\Account;
 use Neos\Flow\Security\AccountRepository;
 use Neos\Flow\Security\Cryptography\HashService;
 use Neos\Flow\Utility\Algorithms;
+use Neos\Party\Domain\Model\ElectronicAddress;
 use Neos\Party\Domain\Service\PartyService;
 
 class UserController extends \Neos\Flow\Mvc\Controller\ActionController
@@ -87,13 +88,6 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function createAction(User $user)
     {
-        // @todo remove that workaround for the long term
-
-        $user->getContact()->setUser($user);
-        $user->getContact()->setEmail($user->getContact()->getEmail());
-
-        // end
-
         $this->fixMissingAccount($user);
         $this->userRepository->add($user);
         $this->redirect(
@@ -147,8 +141,8 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function updatePasswordAction(Account $account, $newPassword, $newPasswordDuplicate)
     {
-        if(strlen($newPassword) < 6) {
-            $this->addFlashMessage('6 Zeichen sind das minimum für ein Passwort.', '', Message::SEVERITY_ERROR);
+        if(strlen($newPassword) < 8) {
+            $this->addFlashMessage('8 Zeichen sind das minimum für ein Passwort.', '', Message::SEVERITY_ERROR);
             $this->redirect(
                 'edit',
                 null,
@@ -187,7 +181,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
         );
     }
 
-    public function getGeneralViewVariables()
+    protected function getGeneralViewVariables()
     {
         $this->view->assign(
             'institutions',
@@ -222,5 +216,42 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      * @Flow\Signal
      */
     protected function emitRenderSettings(ViewInterface $view, User $user, &$additionalPartials, &$additionalPartialsData)
-    {}
+    {
+
+    }
+
+
+    public function newElectronicAdressAction(User $object)
+    {
+        $this->view->assign(
+            'object',
+            $object
+        );
+
+        $ea = new ElectronicAddress();
+        $ea->setType('Email');
+        $ea->setUsage('Work');
+        $ea->setApproved(1);
+        $this->view->assign(
+            'electronicAddress',
+            $ea
+        );
+    }
+
+    public function addElectronicAdressAction(User $object, ElectronicAddress $electronicAddress)
+    {
+        $object->addElectronicAddress($electronicAddress);
+        if ($object->getPrimaryElectronicAddress() === null) {
+            $object->setPrimaryElectronicAddress($electronicAddress);
+        }
+        $this->getRepository()->update($object);
+        $this->redirect(
+            'edit',
+            null,
+            null,
+            [
+                'object' => $object
+            ]
+        );
+    }
 }
