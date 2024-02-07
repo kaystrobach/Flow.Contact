@@ -244,13 +244,13 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
         if ($object->getPrimaryElectronicAddress() === null) {
             $object->setPrimaryElectronicAddress($electronicAddress);
         }
-        $this->getRepository()->update($object);
+        $this->userRepository->update($object);
         $this->redirect(
             'edit',
             null,
             null,
             [
-                'object' => $object
+                'user' => $object
             ]
         );
     }
