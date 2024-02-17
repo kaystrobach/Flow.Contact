@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240108181837 extends AbstractMigration
+final class Version20240217063742 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -25,7 +25,9 @@ final class Version20240108181837 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MySqlPlatform'."
         );
 
-        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_institution ADD address_combinedaddress LONGTEXT NOT NULL, ADD address_street VARCHAR(255) NOT NULL, ADD address_housenumber VARCHAR(255) NOT NULL, ADD address_addressaddon VARCHAR(255) NOT NULL, ADD address_roomnumber VARCHAR(255) NOT NULL, ADD address_zipcode VARCHAR(255) NOT NULL, ADD address_city VARCHAR(255) NOT NULL, ADD address_country VARCHAR(255) NOT NULL');
+        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD primaryinstitutionrelationship VARCHAR(40) DEFAULT NULL');
+        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD CONSTRAINT FK_A32C8B071C682152 FOREIGN KEY (primaryinstitutionrelationship) REFERENCES kaystrobach_contact_domain_model_userinstitutionrelationship (persistence_object_identifier)');
+        $this->addSql('CREATE INDEX IDX_A32C8B071C682152 ON kaystrobach_contact_domain_model_user (primaryinstitutionrelationship)');
     }
 
     public function down(Schema $schema): void
@@ -36,6 +38,8 @@ final class Version20240108181837 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MySqlPlatform'."
         );
 
-        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_institution DROP address_combinedaddress, DROP address_street, DROP address_housenumber, DROP address_addressaddon, DROP address_roomnumber, DROP address_zipcode, DROP address_city, DROP address_country');
+        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user DROP FOREIGN KEY FK_A32C8B071C682152');
+        $this->addSql('DROP INDEX IDX_A32C8B071C682152 ON kaystrobach_contact_domain_model_user');
+        $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user DROP primaryinstitutionrelationship');
     }
 }

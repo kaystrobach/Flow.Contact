@@ -2,9 +2,12 @@
 
 namespace KayStrobach\Contact\Domain\Model;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use KayStrobach\Contact\Domain\Embeddable\AddressEmbeddable;
 use KayStrobach\Contact\Domain\Embeddable\PhoneEmbeddable;
 use KayStrobach\Contact\Domain\Embeddable\SalutationEmbeddable;
+use KayStrobach\Contact\Domain\Traits\CollectionBugfixTrait;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Neos\Party\Domain\Model\Person;
@@ -15,6 +18,7 @@ use Neos\Party\Domain\Model\Person;
  */
 class User extends Person
 {
+    use CollectionBugfixTrait;
     /**
      * @ORM\Embedded(columnPrefix="address_")
      * @var AddressEmbeddable
@@ -28,52 +32,38 @@ class User extends Person
     protected $salutation;
 
     /**
-     * @ORM\Embedded(columnPrefix="phone_")
-     * @var PhoneEmbeddable
-     */
-    protected $phone;
-
-    /**
      * @ORM\Embedded(columnPrefix="phone_private_")
      * @var PhoneEmbeddable
      */
     protected $phonePrivate;
 
     /**
-     * @var \KayStrobach\Contact\Domain\Model\Institution
-     * @ORM\ManyToOne(cascade={"persist"}, inversedBy="users")
+     * @ORM\OneToMany(mappedBy="user", cascade={"persist"})
+     * @var Collection<UserInstitutionRelationship>
      */
-    protected $institution;
+    protected $instutionRelationships;
 
     /**
-     * @var string
-     * @Flow\Validate(type="String")
+     * @ORM\ManyToOne()
+     * @var ?UserInstitutionRelationship
      */
-    protected string $institutionPosition = '';
+    protected ?UserInstitutionRelationship $primaryInstitutionRelationship;
 
     public function __construct()
     {
         parent::__construct();
         $this->address = new AddressEmbeddable();
         $this->salutation = new SalutationEmbeddable();
-        $this->phone = new PhoneEmbeddable();
         $this->phonePrivate = new PhoneEmbeddable();
+        $this->instutionRelationships = new ArrayCollection();
     }
 
     /**
-     * @return \KayStrobach\Contact\Domain\Model\Institution
+     * @return ?\KayStrobach\Contact\Domain\Model\Institution
      */
     public function getInstitution()
     {
-        return $this->institution;
-    }
-
-    /**
-     * @param \KayStrobach\Contact\Domain\Model\Institution $institution
-     */
-    public function setInstitution($institution)
-    {
-        $this->institution = $institution;
+        return $this->getPrimaryInstitutionRelationship()->getInstitution();
     }
 
     /**
@@ -118,24 +108,9 @@ class User extends Person
         $this->salutation = $salutation;
     }
 
-    public function getPhone(): PhoneEmbeddable
-    {
-        return $this->phone;
-    }
-
-    public function setPhone(PhoneEmbeddable $phone): void
-    {
-        $this->phone = $phone;
-    }
-
     public function getInstitutionPosition(): string
     {
-        return $this->institutionPosition;
-    }
-
-    public function setInstitutionPosition(string $institutionPosition): void
-    {
-        $this->institutionPosition = $institutionPosition;
+        return $this->getPrimaryInstitutionRelationship()->getPosition();
     }
 
     public function getPhonePrivate(): PhoneEmbeddable
@@ -153,5 +128,25 @@ class User extends Person
         if ($this->getName()->getFullName() !== '') {
             $this->address->updateCombinedAdress($this->getName());
         }
+    }
+
+    public function getInstutionRelationships(): ArrayCollection|Collection
+    {
+        return $this->instutionRelationships;
+    }
+
+    public function setInstutionRelationships(ArrayCollection|Collection $instutionRelationships): void
+    {
+        $this->instutionRelationships = $this->mergeCollections($this->instutionRelationships, $instutionRelationships);
+    }
+
+    public function getPrimaryInstitutionRelationship(): ?UserInstitutionRelationship
+    {
+        return $this->primaryInstitutionRelationship;
+    }
+
+    public function setPrimaryInstitutionRelationship(?UserInstitutionRelationship $primaryInstitutionRelationship
+    ): void {
+        $this->primaryInstitutionRelationship = $primaryInstitutionRelationship;
     }
 }

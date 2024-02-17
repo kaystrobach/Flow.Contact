@@ -3,6 +3,7 @@
 namespace KayStrobach\Contact\Domain\Model;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use KayStrobach\Contact\Domain\Embeddable\AddressEmbeddable;
 use KayStrobach\Contact\Domain\Traits\ContactTrait;
 use Neos\Flow\Annotations as Flow;
@@ -35,9 +36,16 @@ class Institution
      */
     protected $users;
 
+    /**
+     * @ORM\OneToMany(mappedBy="institution")
+     * @var Collection<UserInstitutionRelationship>
+     */
+    protected $personRelationships;
+
     public function __construct()
     {
         $this->address = new AddressEmbeddable();
+        $this->personRelationships = new ArrayCollection();
     }
 
     /**

@@ -21,8 +21,8 @@ final class Version20240131133932 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
-            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform,
+            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MySqlPlatform'."
         );
 
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD phone_private_landline VARCHAR(255) NOT NULL, ADD phone_private_mobile VARCHAR(255) NOT NULL');
@@ -32,8 +32,8 @@ final class Version20240131133932 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
-            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform,
+            "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MySqlPlatform'."
         );
 
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user DROP phone_private_landline, DROP phone_private_mobile');
