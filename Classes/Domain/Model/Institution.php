@@ -5,16 +5,19 @@ namespace KayStrobach\Contact\Domain\Model;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use KayStrobach\Contact\Domain\Embeddable\AddressEmbeddable;
+use KayStrobach\Contact\Domain\Traits\CollectionBugfixTrait;
 use KayStrobach\Contact\Domain\Traits\ContactTrait;
 use Neos\Flow\Annotations as Flow;
 use Doctrine\ORM\Mapping as ORM;
 use Gedmo\Mapping\Annotation as Gedmo;
 
 /**
+ * @ORM\InheritanceType("JOINED")
  * @Flow\Entity
  */
 class Institution
 {
+    use CollectionBugfixTrait;
     // @todo fix this use ContactTrait;
 
     /**
@@ -31,13 +34,7 @@ class Institution
     protected $address;
 
     /**
-     * @var ArrayCollection<\KayStrobach\Contact\Domain\Model\User>
-     * @ORM\OneToMany(mappedBy="institution")
-     */
-    protected $users;
-
-    /**
-     * @ORM\OneToMany(mappedBy="institution")
+     * @ORM\OneToMany(mappedBy="institution", cascade={"persist"})
      * @var Collection<UserInstitutionRelationship>
      */
     protected $personRelationships;
@@ -88,18 +85,35 @@ class Institution
     }
 
     /**
+     * @deprecated
      * @return ArrayCollection
      */
     public function getUsers()
     {
-        return $this->users;
+        $collectedUsers = new ArrayCollection();
+        foreach ($this->personRelationships as $personRelationship) {
+            $collectedUsers->add($personRelationship->getUser());
+        }
+        return $collectedUsers;
     }
 
-    /**
-     * @param ArrayCollection $users
-     */
-    public function setUsers($users)
+    public function getPersonRelationships(): ArrayCollection|Collection
     {
-        $this->users = $users;
+        return $this->personRelationships;
+    }
+
+    public function setPersonRelationships(ArrayCollection|Collection $personRelationships): void
+    {
+        $this->personRelationships = $this->mergeCollections($this->personRelationships, $personRelationships);
+    }
+
+    public function hasPerson(User $person)
+    {
+        foreach ($this->personRelationships as $relationship) {
+            if($relationship->getPerson() === $person) {
+                return true;
+            }
+        }
+        return false;
     }
 }
