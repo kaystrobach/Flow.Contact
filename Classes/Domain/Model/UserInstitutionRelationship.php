@@ -17,13 +17,13 @@ use Neos\Party\Domain\Model\ElectronicAddress;
 class UserInstitutionRelationship
 {
     /**
-     * @ORM\ManyToOne(inversedBy="personRelationships")
+     * @ORM\ManyToOne(inversedBy="personRelationships", cascade={"persist"})
      * @var ?Institution
      */
     protected ?Institution $institution = null;
 
     /**
-     * @ORM\ManyToOne(inversedBy="instutionRelationships")
+     * @ORM\ManyToOne(inversedBy="instutionRelationships", cascade={"persist"})
      * @var ?User
      */
     protected ?User $user = null;
@@ -77,8 +77,8 @@ class UserInstitutionRelationship
     protected $phonePrivate;
 
     /**
+     * @ORM\ManyToOne(cascade={"persist"})
      * @var ?ElectronicAddress
-     * @ORM\ManyToOne
      */
     protected ?ElectronicAddress $primaryElectronicAddress;
 
