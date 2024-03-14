@@ -64,7 +64,7 @@ final class Version20240217072312 extends AbstractMigration
                 'address_city' => $row['address_city'],
                 'address_country' => $row['address_country'],
                 'phone_work_mobile' => $row['phone_mobile'],
-                'phone_work_landline' => $row['phone_mobile'],
+                'phone_work_landline' => $row['phone_landline'],
                 'phone_private_mobile' => '',
                 'phone_private_landline' => '',
                 'primaryelectronicaddress' => $row['primaryelectronicaddress'] ?? null
