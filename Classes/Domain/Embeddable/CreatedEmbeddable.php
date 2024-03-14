@@ -23,6 +23,11 @@ class CreatedEmbeddable
      */
     protected string $by = '';
 
+    public function __construct()
+    {
+        $this->at = new DateTimeImmutable('now');
+    }
+
     /**
      * @return DateTimeImmutable|null
      */

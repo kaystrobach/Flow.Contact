@@ -80,11 +80,11 @@ class UserInstitutionRelationship
      * @ORM\ManyToOne(cascade={"persist"})
      * @var ?ElectronicAddress
      */
-    protected ?ElectronicAddress $primaryElectronicAddress;
+    protected ?ElectronicAddress $primaryElectronicAddress = null;
 
     public function __construct()
     {
-        $this->created = new \DateTimeImmutable('now');
+        $this->created = new CreatedEmbeddable();
         $this->term = new TermEmbeddable();
         $this->address = new AddressEmbeddable();
         $this->phoneWork = new PhoneEmbeddable();
