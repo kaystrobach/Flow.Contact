@@ -47,7 +47,7 @@ class User extends Person
      * @ORM\ManyToOne()
      * @var ?UserInstitutionRelationship
      */
-    protected ?UserInstitutionRelationship $primaryInstitutionRelationship;
+    protected ?UserInstitutionRelationship $primaryInstitutionRelationship = null;
 
     public function __construct()
     {
