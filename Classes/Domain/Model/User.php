@@ -63,6 +63,9 @@ class User extends Person
      */
     public function getInstitution()
     {
+        if ($this->getPrimaryInstitutionRelationship() === null) {
+            return null;
+        }
         return $this->getPrimaryInstitutionRelationship()->getInstitution();
     }
 
