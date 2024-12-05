@@ -197,16 +197,24 @@ class AddressEmbeddable
         if ($this->getStreet() === '') {
             return;
         }
+        $data = [
+            $personname,
+            '',
+            $this->street . ' ' . $this->houseNumber,
+            $this->roomNumber,
+            $this->addressAddon,
+            $this->zipCode . ' ' . $this->city . ' - ' . $this->country
+        ];
+
+        // Trimme alle Zeilen und filtere leere Zeilen heraus
+        $filteredData = array_filter(
+            array_map('trim', $data),
+            function($value) { return $value !== ''; }
+        );
+
         $this->combinedAddress = implode(
             PHP_EOL,
-            [
-                $personname,
-                '',
-                $this->street . ' ' . $this->houseNumber,
-                $this->roomNumber,
-                $this->addressAddon,
-                $this->zipCode . ' ' . $this->city . ' - ' . $this->country
-            ]
+            $filteredData
         );
     }
 }
