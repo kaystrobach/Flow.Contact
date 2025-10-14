@@ -2,6 +2,7 @@
 
 namespace KayStrobach\Contact\Controller;
 
+use KayStrobach\Contact\Domain\Dto\UserDto;
 use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
@@ -84,11 +85,24 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
     }
 
     /**
-     * @param User $user
+     * @param UserDto $user
+     * @Flow\Validate(
+     *     argumentName="userDto",
+     *     type="KayStrobach\Contact\Validation\Validator\PropertiesIdenticalValidator",
+     *     options={
+     *         "property1"="password",
+     *         "property2"="passwordConfirmation",
+     *     }
+     * )
+     * @Flow\Validate(
+     *      argumentName="userDto.user.name.firstName",
+     *      type="NotEmpty",
+     *  )
+     * @Flow\ValidationGroups(validationGroups={"create"})
      */
-    public function createAction(User $user)
+    public function createAction(UserDto $userDto)
     {
-        $this->fixMissingAccount($user);
+        $user = $userDto->createUser();
         $this->userRepository->add($user);
         $this->redirect(
             'edit',
