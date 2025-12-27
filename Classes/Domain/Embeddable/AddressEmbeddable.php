@@ -66,6 +66,12 @@ class AddressEmbeddable
      */
     protected $country = '';
 
+    /**
+     * @ORM\Column(type="text")
+     * @var string
+     */
+    protected $personName = '';
+
     public function getCombinedAddress(): string
     {
         return $this->combinedAddress;
@@ -188,17 +194,28 @@ class AddressEmbeddable
         $this->country = $country;
     }
 
+    public function getPersonName(): string
+    {
+        return $this->personName;
+    }
+
+    public function setPersonName(string $personName): void
+    {
+        $this->personName = $personName;
+    }
+
     /**
      * @ORM\PrePersist()
      * @return void
      */
-    public function updateCombinedAdress(string $personname): void
+    public function updateCombinedAdress(string $additionalName): void
     {
         if ($this->getStreet() === '') {
             return;
         }
         $data = [
-            $personname,
+            $additionalName,
+            $this->personName,
             '',
             $this->street . ' ' . $this->houseNumber,
             $this->roomNumber,
