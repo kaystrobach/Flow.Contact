@@ -25,7 +25,6 @@ final class Version20251227122221 extends AbstractMigration
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MySqlPlatform'."
         );
 
-        $this->addSql('ALTER TABLE fourviewture_kis_crm_domain_model_customer ADD postaladdress_personname LONGTEXT NOT NULL, ADD invoiceaddress_personname LONGTEXT NOT NULL');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_institution ADD address_personname LONGTEXT NOT NULL');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user ADD address_personname LONGTEXT NOT NULL');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_userinstitutionrelationship ADD address_personname LONGTEXT NOT NULL, ADD postal_address_personname LONGTEXT NOT NULL');
@@ -42,6 +41,5 @@ final class Version20251227122221 extends AbstractMigration
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_institution DROP address_personname');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_user DROP address_personname');
         $this->addSql('ALTER TABLE kaystrobach_contact_domain_model_userinstitutionrelationship DROP address_personname, DROP postal_address_personname');
-        $this->addSql('ALTER TABLE fourviewture_kis_crm_domain_model_customer DROP postaladdress_personname, DROP invoiceaddress_personname');
     }
 }
