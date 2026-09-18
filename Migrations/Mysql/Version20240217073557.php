@@ -21,7 +21,7 @@ final class Version20240217073557 extends AbstractMigration
     {
         // this up() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform,
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
         );
 
@@ -35,7 +35,7 @@ final class Version20240217073557 extends AbstractMigration
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->abortIf(
-            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MariaDb1027Platform,
+            !$this->connection->getDatabasePlatform() instanceof \Doctrine\DBAL\Platforms\MySqlPlatform,
             "Migration can only be executed safely on '\Doctrine\DBAL\Platforms\MariaDb1027Platform'."
         );
 
