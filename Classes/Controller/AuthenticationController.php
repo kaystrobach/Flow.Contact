@@ -83,7 +83,7 @@ class AuthenticationController extends AbstractAuthenticationController
      * @throws \Neos\Flow\Mvc\Exception\StopActionException
      * @throws \Neos\Flow\Configuration\Exception\InvalidConfigurationTypeException
      */
-    protected function onAuthenticationSuccess(ActionRequest $originalRequest = null)
+    protected function onAuthenticationSuccess(?ActionRequest $originalRequest = null)
     {
         $configuration = $this->settings['AuthenticationController'];
 
@@ -124,7 +124,7 @@ class AuthenticationController extends AbstractAuthenticationController
      * @return void
      * @throws \Neos\Flow\Mvc\Exception\StopActionException
      */
-    protected function onAuthenticationFailure(AuthenticationRequiredException $exception = null)
+    protected function onAuthenticationFailure(?AuthenticationRequiredException $exception = null)
     {
         $this->controllerContext->getFlashMessageContainer()->addMessage(
             new Error('Authentication failed!', ($exception === null ? 1347016771 : $exception->getCode()))

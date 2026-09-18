@@ -37,7 +37,7 @@ class InstitutionController extends \Neos\Flow\Mvc\Controller\ActionController
      * @Flow\IgnoreValidation("institution")
      * @param Institution $institution
      */
-    public function newAction(Institution $institution = null) {
+    public function newAction(?Institution $institution = null) {
 
     }
 

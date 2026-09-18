@@ -80,7 +80,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      * @Flow\IgnoreValidation("institution")
      * @param User $institution
      */
-    public function newAction(User $institution = null) {
+    public function newAction(?User $institution = null) {
         $this->getGeneralViewVariables();
     }
 
