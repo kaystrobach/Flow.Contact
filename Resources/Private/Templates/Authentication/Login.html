@@ -14,14 +14,13 @@
             <div class="card card-blurred card-container">
                 <img id="profile-img" src="{f:uri.resource(path:settings.Layout.Icons.ProfileIcon.path)}" />
                 <p id="profile-name" class="profile-name-card">{settings.Layout.ApplicationName}</p>
-                <form class="form-signin">
-                    <f:render partial="Layout/FlashMessages" arguments="{_all}"/>
-                    <span id="reauth-email" class="reauth-email"></span>
-                    <input type="text" id="inputEmail" placeholder="Benutzername" required autofocus class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][username]" value="{username}">
-                    <input type="password" id="inputPassword" placeholder="Passwort" required class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][password]">
-                    <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
-                </form><!-- /form -->
-
+                <f:render partial="Layout/FlashMessages" arguments="{_all}"/>
+                <span id="reauth-email" class="reauth-email"></span>
+                <label for="inputEmail">Benutzername</label>
+                <input type="text" id="inputEmail" required autofocus class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][username]" value="{username}">
+                <label for="inputPassword">Passwort</label>
+                <input type="password" id="inputPassword" required class="form-control" name="__authentication[Neos][Flow][Security][Authentication][Token][UsernamePassword][password]">
+                <button class="btn btn-lg btn-primary btn-block btn-signin" type="submit">Sign in</button>
                 <f:link.action controller="forgotPassword" action="index" class="forgot-password" arguments="{username:username}">
                     Passwort vergessen?
                 </f:link.action>
