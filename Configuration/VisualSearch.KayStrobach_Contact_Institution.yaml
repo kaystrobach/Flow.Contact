@@ -1,0 +1,24 @@
+Searches:
+# ======================================================================================================================
+  KayStrobach_Contact_Institution:
+    search:
+      repository: KayStrobach\Contact\Domain\Repository\InstitutionRepository
+    autocomplete:
+      freetext:
+        label: "Text"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - name
+      searchtext:
+        label: "Name"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - name
