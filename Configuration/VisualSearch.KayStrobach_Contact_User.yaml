@@ -3,6 +3,49 @@ Searches:
   KayStrobach_Contact_User:
     search:
       repository: KayStrobach\Contact\Domain\Repository\UserRepository
+    sorting:
+      1000:
+        label: "Name ▲"
+        fields:
+          'name.lastName': ASC
+          'name.firstName': ASC
+      1010:
+        label: "Name ▼"
+        fields:
+          'name.lastName': DESC
+          'name.firstName': DESC
+      2000:
+        label: "Benutzername ▲"
+        fields:
+          'accounts.accountIdentifier': ASC
+      2010:
+        label: "Benutzername ▼"
+        fields:
+          'accounts.accountIdentifier': DESC
+      3000:
+        label: "Institution ▲"
+        fields:
+          'primaryInstitutionRelationship.institution.name': ASC
+      3010:
+        label: "Institution ▼"
+        fields:
+          'primaryInstitutionRelationship.institution.name': DESC
+      4000:
+        label: "Letztes Login ▲"
+        fields:
+          'accounts.lastSuccessfulAuthenticationDate': ASC
+      4010:
+        label: "Letztes Login ▼"
+        fields:
+          'accounts.lastSuccessfulAuthenticationDate': DESC
+      5000:
+        label: "Fehlversuche ▲"
+        fields:
+          'accounts.failedAuthenticationCount': ASC
+      5010:
+        label: "Fehlversuche ▼"
+        fields:
+          'accounts.failedAuthenticationCount': DESC
     autocomplete:
       freetext:
         label: "Text"
@@ -14,6 +57,7 @@ Searches:
           like:
             - accounts.accountIdentifier
             - name.fullName
+            - primaryElectronicAddress.identifier
       accountIdentifier:
         label: "Account"
         selector:
@@ -32,6 +76,24 @@ Searches:
         matches:
           like:
             - name.fullName
+      email:
+        label: "E-Mail"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - electronicAddresses.identifier
+      city:
+        label: "Ort"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - address.city
       institution:
         label: "Institution"
         selector:
@@ -41,5 +103,47 @@ Searches:
           orderBy: name
           repository: KayStrobach\Contact\Domain\Repository\InstitutionRepository
         matches:
+          # any relationship, not only the primary one
           equals:
-            - institution
+            - instutionRelationships.institution
+      role:
+        label: "Rolle"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - accounts.roleIdentifiers
+      lastLoginAfter:
+        label: "Letztes Login ab (TT.MM.JJJJ)"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+          dateFormat: d.m.Y
+        matches:
+          KayStrobach\VisualSearch\Demands\Date\LowestDateCommand:
+            - accounts.lastSuccessfulAuthenticationDate
+      lastLoginBefore:
+        label: "Letztes Login bis (TT.MM.JJJJ)"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+          dateFormat: d.m.Y
+        matches:
+          KayStrobach\VisualSearch\Demands\Date\HighestDateDemand:
+            - accounts.lastSuccessfulAuthenticationDate
+      failedAuthentications:
+        label: "Fehlversuche"
+        selector:
+          conditions:
+            once: true
+          values:
+            '0': "mehr als 0"
+            '2': "mehr als 2"
+            '5': "mehr als 5"
+        matches:
+          KayStrobach\VisualSearch\Demands\GreaterThanDemand:
+            - accounts.failedAuthenticationCount

@@ -3,6 +3,35 @@ Searches:
   KayStrobach_Contact_Institution:
     search:
       repository: KayStrobach\Contact\Domain\Repository\InstitutionRepository
+    sorting:
+      1000:
+        label: "Name ▲"
+        fields:
+          'name': ASC
+      1010:
+        label: "Name ▼"
+        fields:
+          'name': DESC
+      2000:
+        label: "Ort ▲"
+        fields:
+          'address.city': ASC
+          'name': ASC
+      2010:
+        label: "Ort ▼"
+        fields:
+          'address.city': DESC
+          'name': ASC
+      3000:
+        label: "PLZ ▲"
+        fields:
+          'address.zipCode': ASC
+          'name': ASC
+      3010:
+        label: "PLZ ▼"
+        fields:
+          'address.zipCode': DESC
+          'name': ASC
     autocomplete:
       freetext:
         label: "Text"
@@ -13,6 +42,8 @@ Searches:
         matches:
           like:
             - name
+            - address.city
+            - address.zipCode
       searchtext:
         label: "Name"
         selector:
@@ -22,3 +53,21 @@ Searches:
         matches:
           like:
             - name
+      city:
+        label: "Ort"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - address.city
+      zipCode:
+        label: "PLZ"
+        selector:
+          conditions:
+            once: true
+          freeInput: true
+        matches:
+          like:
+            - address.zipCode

@@ -20,6 +20,8 @@ class UserRepository extends SearchableRepository
     protected $defaultSearchName = 'KayStrobach_Contact_User';
 
     /**
+     * Users with any relationship to the institution, not only the primary one
+     *
      * @param Institution $institution
      * @return \Neos\Flow\Persistence\QueryResultInterface
      */
@@ -28,7 +30,7 @@ class UserRepository extends SearchableRepository
         $query = $this->createQuery();
         $query->matching(
             $query->equals(
-                'institution', $institution
+                'instutionRelationships.institution', $institution
             )
         );
         return $query->execute();

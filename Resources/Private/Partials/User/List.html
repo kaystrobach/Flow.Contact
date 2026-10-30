@@ -17,11 +17,11 @@
                     <tr>
                         <td>
                             <f:link.action action="edit" controller="user" arguments="{user:user}">
-                                {user.contact.name}
+                                {user.name}
                             </f:link.action>
                         </td>
                         <td>
-                            {user.contact.email}
+                            {user.primaryElectronicAddress.identifier}
                         </td>
                     </tr>
                 </f:for>
