@@ -6,6 +6,8 @@ use KayStrobach\Contact\Domain\Dto\UserDto;
 use KayStrobach\Contact\Domain\Model\User;
 use KayStrobach\Contact\Domain\Repository\InstitutionRepository;
 use KayStrobach\Contact\Domain\Repository\UserRepository;
+use KayStrobach\Contact\Search\Demand\AccountStatusDemand;
+use KayStrobach\VisualSearch\Domain\Session\QueryStorage;
 use Neos\Flow\Annotations as Flow;
 use KayStrobach\Contact\Domain\Model\Institution;
 use Neos\Error\Messages\Message;
@@ -20,6 +22,8 @@ use Neos\Party\Domain\Service\PartyService;
 
 class UserController extends \Neos\Flow\Mvc\Controller\ActionController
 {
+    protected const SEARCH_NAME = 'KayStrobach_Contact_User';
+
     /**
      * @Flow\Inject()
      * @var UserRepository
@@ -63,9 +67,25 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
     protected $partyService;
 
     /**
+     * @Flow\Inject()
+     * @var QueryStorage
+     */
+    protected $queryStorage;
+
+    /**
      *
      */
     public function indexAction() {
+        // first visit in this session: hide deactivated accounts, the user may remove the facet afterwards
+        if (!array_key_exists(self::SEARCH_NAME, $this->queryStorage->getQueries())) {
+            $this->queryStorage->addQueryConstraint(
+                self::SEARCH_NAME,
+                'Account-Status',
+                'accountStatus',
+                'aktiv',
+                AccountStatusDemand::ACTIVE
+            );
+        }
         $this->view->assign(
             'now',
             new \DateTime('now')

@@ -115,6 +115,18 @@ Searches:
         matches:
           like:
             - accounts.roleIdentifiers
+      accountStatus:
+        label: "Account-Status"
+        selector:
+          conditions:
+            once: true
+          values:
+            active: "aktiv"
+            disabled: "deaktiviert"
+        matches:
+          # deactivated = expiration date in the past, preset with "aktiv" in UserController::indexAction()
+          KayStrobach\Contact\Search\Demand\AccountStatusDemand:
+            - accounts.expirationDate
       lastLoginAfter:
         label: "Letztes Login ab (TT.MM.JJJJ)"
         selector:
