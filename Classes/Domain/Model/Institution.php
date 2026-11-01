@@ -18,7 +18,6 @@ use Gedmo\Mapping\Annotation as Gedmo;
 class Institution
 {
     use CollectionBugfixTrait;
-    // @todo fix this use ContactTrait;
 
     /**
      * @var string
@@ -26,6 +25,21 @@ class Institution
      * @Flow\Validate(type="NotEmpty")
      */
     protected $name;
+
+    /**
+     * @var string
+     */
+    protected $email = '';
+
+    /**
+     * @var string
+     */
+    protected $phone = '';
+
+    /**
+     * @var string
+     */
+    protected $mobile = '';
 
     /**
      * @ORM\Embedded(columnPrefix="address_")
@@ -38,6 +52,14 @@ class Institution
      * @var Collection<UserInstitutionRelationship>
      */
     protected $personRelationships;
+
+    /**
+     * soft delete, relationships to users are kept
+     *
+     * @var bool
+     * @ORM\Column(options={"default": false})
+     */
+    protected $deleted = false;
 
     public function __construct()
     {
@@ -115,5 +137,58 @@ class Institution
             }
         }
         return false;
+    }
+
+    public function getEmail(): string
+    {
+        return $this->email;
+    }
+
+    public function setEmail(?string $email): void
+    {
+        $this->email = (string)$email;
+    }
+
+    public function getPhone(): string
+    {
+        return $this->phone;
+    }
+
+    public function setPhone(?string $phone): void
+    {
+        $this->phone = (string)$phone;
+    }
+
+    public function getMobile(): string
+    {
+        return $this->mobile;
+    }
+
+    public function setMobile(?string $mobile): void
+    {
+        $this->mobile = (string)$mobile;
+    }
+
+    /**
+     * label for select boxes, marks deleted institutions
+     */
+    public function getLabel(): string
+    {
+        return (string)$this->name . ($this->deleted ? ' (gelöscht)' : '');
+    }
+
+    public function isDeleted(): bool
+    {
+        return $this->deleted;
+    }
+
+    public function delete(): void
+    {
+        $this->deleted = true;
+    }
+
+    public function restore(): void
+    {
+        $this->deleted = false;
     }
 }

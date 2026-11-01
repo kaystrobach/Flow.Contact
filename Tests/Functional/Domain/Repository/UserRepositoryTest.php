@@ -69,6 +69,34 @@ class UserRepositoryTest extends FunctionalTestCase
         self::assertSame(0, $this->userRepository->findByInstitution($institution)->count());
     }
 
+    /**
+     * @test
+     */
+    public function setInstitutionCreatesAndUpdatesThePrimaryRelationship(): void
+    {
+        $school = $this->createInstitution('Schule');
+        $otherSchool = $this->createInstitution('Andere Schule');
+        $user = new User();
+        $user->setName(new PersonName('', 'Test', '', 'Neu'));
+
+        $user->setInstitution(null);
+        self::assertNull($user->getPrimaryInstitutionRelationship());
+
+        $user->setInstitution($school);
+        $relationship = $user->getPrimaryInstitutionRelationship();
+        self::assertSame($school, $user->getInstitution());
+        self::assertSame(1, $user->getInstutionRelationships()->count());
+
+        $user->setInstitution($otherSchool);
+        self::assertSame($relationship, $user->getPrimaryInstitutionRelationship());
+        self::assertSame($otherSchool, $user->getInstitution());
+        self::assertSame(1, $user->getInstutionRelationships()->count());
+
+        $this->userRepository->add($user);
+        $this->persistenceManager->persistAll();
+        self::assertSame(1, $this->userRepository->findByInstitution($otherSchool)->count());
+    }
+
     protected function createInstitution(string $name): Institution
     {
         $institution = new Institution();

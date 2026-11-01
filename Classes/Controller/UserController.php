@@ -101,7 +101,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      * @param User $institution
      */
     public function newAction(?User $institution = null) {
-        $this->getGeneralViewVariables();
+        $this->getGeneralViewVariables(null);
     }
 
     /**
@@ -140,7 +140,7 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
      */
     public function editAction(User $user)
     {
-        $this->getGeneralViewVariables();
+        $this->getGeneralViewVariables($user->getInstitution());
         $this->view->assign('user', $user);
 
         $partials = [];
@@ -215,11 +215,14 @@ class UserController extends \Neos\Flow\Mvc\Controller\ActionController
         );
     }
 
-    protected function getGeneralViewVariables()
+    /**
+     * @param Institution|null $currentInstitution stays selectable even if it was deleted
+     */
+    protected function getGeneralViewVariables(?Institution $currentInstitution)
     {
         $this->view->assign(
             'institutions',
-            $this->institutionRepository->findAll()
+            $this->institutionRepository->findSelectable($currentInstitution)
         );
         $this->view->assign(
             'roles',

@@ -76,6 +76,30 @@ class InstitutionController extends \Neos\Flow\Mvc\Controller\ActionController
         $this->redirect('index');
     }
 
+    public function deletedAction()
+    {
+        $this->view->assign('institutions', $this->institutionRepository->findDeleted());
+    }
+
+    /**
+     * soft delete, relationships to users are kept
+     */
+    public function deleteAction(Institution $institution)
+    {
+        $institution->delete();
+        $this->institutionRepository->update($institution);
+        $this->addFlashMessage('Einrichtung ' . $institution->getName() . ' wurde gelöscht');
+        $this->redirect('index');
+    }
+
+    public function restoreAction(Institution $institution)
+    {
+        $institution->restore();
+        $this->institutionRepository->update($institution);
+        $this->addFlashMessage('Einrichtung ' . $institution->getName() . ' wurde wiederhergestellt');
+        $this->redirect('deleted');
+    }
+
     /**
      * @param ViewInterface $view
      * @param Institution $institution

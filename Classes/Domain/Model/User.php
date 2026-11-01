@@ -70,6 +70,26 @@ class User extends Person
     }
 
     /**
+     * Sets the institution of the primary relationship, creates the relationship if there is none yet
+     *
+     * @param ?\KayStrobach\Contact\Domain\Model\Institution $institution
+     */
+    public function setInstitution(?Institution $institution): void
+    {
+        $relationship = $this->getPrimaryInstitutionRelationship();
+        if ($relationship === null) {
+            if ($institution === null) {
+                return;
+            }
+            $relationship = new UserInstitutionRelationship();
+            $relationship->setUser($this);
+            $this->instutionRelationships->add($relationship);
+            $this->primaryInstitutionRelationship = $relationship;
+        }
+        $relationship->setInstitution($institution);
+    }
+
+    /**
      * Sets the accounts of this party
      *
      * @param \Doctrine\Common\Collections\Collection $accounts All assigned Neos\Flow\Security\Account objects
